@@ -1,0 +1,19 @@
+{
+   "background": {
+      "scripts": [ "background.js" ]
+   },
+   "chrome_url_overrides": {
+      "newtab": "newtab.html"
+   },
+   "description": "Override Edge's New Tab Page With Bookmark Links, based on peapix' extension",
+   "icons": {
+      "128": "icons/icon128.png",
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+   },
+   "manifest_version": 2,
+   "name": "Liquid Seperation",
+   "options_page": "options.html",
+   "permissions": [ "storage", "alarms", "topSites", "bookmarks", "chrome://favicon/*", "https://peapix.com/*" ],
+   "version": "1.0.0"
+}

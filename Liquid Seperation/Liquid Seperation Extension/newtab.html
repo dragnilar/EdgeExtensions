@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1" />
+    <title>New Tab</title>
+    <link href="./newtab.min.css" rel="stylesheet" type="text/css" />
+    <link href="icons/icon16.png" rel="shotcut icon" type="image/x-icon" />
+</head>
+
+<body style="display:none">
+    <div class="newtab-bg" id="bg"></div>
+    <main class="newtab-body">
+        <div class="settings">
+            <div class="container">
+                <div class="row no-gutters">
+                    <div class="col-12">
+                        <button class="settings__btn" id="setting"><svg width="20.8" height="18" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cog" class="svg-inline--fa fa-cog fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"></path></svg></button>
+                        <div class="settings__dialog">
+                            <button class="btn-close text-gray settings__dialog-close"><svg width="6.88" height="10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" class="svg-inline--fa fa-times fa-w-11" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg></button>
+                            <h1 class="settings__dialog-title">Settings</h1>
+                            <div class="settings__options">
+                                <div class="settings__option">
+                                    <span>Web Search</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="siteSearchOption" />
+                                        <span class="toggle-switch__track"></span>
+                                    </label>
+                                </div>
+                                <div class="settings__option">
+                                    <span>Top Sites</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="topSitesOption" />
+                                        <span class="toggle-switch__track"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="searchbox-container">
+            <div class="container">
+                <div class="row no-gutters">
+                    <div class="col-9 col-md-7 mx-auto">
+                        <div class="searchbox">
+                            <div class="searchbox__dropdown" data-value="">
+                                <span id="customSearchName"></span><i class="searchbox__svg-icon"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
+                                        <path fill="none" d="M0 0h24v24H0V0z" /></svg></i>
+                            </div>
+                            <input class="searchbox__input" autocomplete="off" autocapitalize="off" id="form1"
+                                placeholder="Search the web" />
+                            <button class="searchbox__button" id="search-action">
+                                <i class="searchbox__svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24">
+                                        <path
+                                            d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z">
+                                        </path>
+                                    </svg></i>
+                            </button>
+                        </div>
+                        <div class="searchbox__dropdown-menu"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="topsites">
+            <div class="container">
+                <div class="row no-gutters">
+                    <div class="col-12 col-md-10 mx-auto">
+                        <div class="topsites-grid" id="topsites-grid-1">
+                        </div>
+                    </div>
+                </div>
+				<br />
+				<br />
+                <div class="row no-gutters">
+                    <div class="col-12 col-md-10 mx-auto">
+                        <div class="topsites-grid" id="topsites-grid-2">
+                        </div>
+                    </div>
+                </div>
+				<br />
+				<br />
+                <div class="row no-gutters">
+                    <div class="col-12 col-md-10 mx-auto">
+                        <div class="topsites-grid" id="topsites-grid-3">
+                        </div>
+                    </div>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col-12 col-md-10 mx-auto">
+                        <div class="topsites-grid" id="topsites-grid-4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="museum-card">
+            <a class="museum-card__credit" href="#" id="photoLink">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21l-8-9h6v-12h4v12h6l-8 9zm9-1v2h-18v-2h-2v4h22v-4h-2z"/></svg> <span class="museum-card__title" id="photoTitle"></span>
+            </a>
+        </div>
+    </main>
+    <!--New Tab script-->
+    <script src="newtab.js"></script>
+</body>
+
+</html>
