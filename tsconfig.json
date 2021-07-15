@@ -5,7 +5,7 @@
     "sourceMap": true,
       "allowJs": true,
     "checkJs": true,
-    "types": ["chrome"]
+    "types": ["chrome", "node"]
   },
   "exclude": [
     "node_modules"
