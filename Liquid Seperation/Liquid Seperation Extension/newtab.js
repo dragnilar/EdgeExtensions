@@ -160,7 +160,8 @@ let quickLinkCount = 0;
                         if (e.currentTarget.classList.contains("show")) return e.currentTarget.classList.remove("show"), void searchBoxDropDownMenuElement.classList.remove("show");
                         // @ts-ignore
                         e.currentTarget.classList.add("show");
-                        var o = t.getBoundingClientRect();
+                        // @ts-ignore
+                        let o = e.currentTarget.getBoundingClientRect();
                         i.setStyles(searchBoxDropDownMenuElement, { position: "absolute", "will-change": "transform", top: "0px", left: "0px", transform: "translate3d(0px, " + o.height + "px, 0px)" }), searchBoxDropDownMenuElement.classList.add("show");
                     }),
                     searchBoxDropDownMenuElement.addEventListener("mouseleave", function (e) {
