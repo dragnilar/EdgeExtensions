@@ -6,6 +6,7 @@
                 if (!e && o) return o(t, !0);
                 if (l) return l(t, !0);
                 var i = new Error("Cannot find module '" + t + "'");
+                // @ts-ignore
                 throw ((i.code = "MODULE_NOT_FOUND"), i);
             }
             var n = (a[t] = { exports: {} });
@@ -100,13 +101,16 @@
                 (a.onclick = function (e) {
                     e.preventDefault(),
                         i.resetOptions(function () {
+                            // @ts-ignore
                             (n.value = ""), (s.value = "2"), chrome.runtime.sendMessage("options_changed");
                         });
                 }),
                     (c.onclick = function (e) {
                         e.preventDefault(),
                             i.loadOptions(function (e) {
+                                // @ts-ignore
                                 (e.region = n.value),
+                                    // @ts-ignore
                                     (e.displayMode = Number(s.value)),
                                     e.save(function () {
                                         (r.innerHTML = "Options saved."),
@@ -120,6 +124,7 @@
                             });
                     }),
                     i.loadOptions(function (e) {
+                        // @ts-ignore
                         (n.value = e.region), (s.value = String(e.displayMode));
                     });
             },

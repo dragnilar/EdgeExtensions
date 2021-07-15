@@ -1,19 +1,20 @@
 let quickLinkCount = 0;
 !(function newTabModule(s, a, c) {
-    function l(t, e) {
-        if (!a[t]) {
-            if (!s[t]) {
-                var o = "function" == typeof require && require;
-                if (!e && o) return o(t, !0);
-                if (u) return u(t, !0);
-                var n = new Error("Cannot find module '" + t + "'");
+    function l(libraryTypes, e) {
+        if (!a[libraryTypes]) {
+            if (!s[libraryTypes]) {
+                var isRequired = "function" == typeof require && require;
+                if (!e && isRequired) return isRequired(libraryTypes, !0);
+                if (u) return u(libraryTypes, !0);
+                var n = new Error("Cannot find module '" + libraryTypes + "'");
+                // @ts-ignore
                 throw ((n.code = "MODULE_NOT_FOUND"), n);
             }
-            var i = (a[t] = { exports: {} });
-            s[t][0].call(
+            var i = (a[libraryTypes] = { exports: {} });
+            s[libraryTypes][0].call(
                 i.exports,
                 function (e) {
-                    return l(s[t][1][e] || e);
+                    return l(s[libraryTypes][1][e] || e);
                 },
                 i,
                 i.exports,
@@ -23,39 +24,39 @@ let quickLinkCount = 0;
                 c
             );
         }
-        return a[t].exports;
+        return a[libraryTypes].exports;
     }
     for (var u = "function" == typeof require && require, e = 0; e < c.length; e++) l(c[e]);
     return l;
 })(
     {
         1: [
-            function (e, t, o) {
+            function (e, t, module) {
                 "use strict";
-                Object.defineProperty(o, "__esModule", { value: !0 }),
-                    (o.loadOptions = function (o) {
+                Object.defineProperty(module, "__esModule", { value: !0 }),
+                    (module.loadOptions = function (o) {
                         chrome.storage.local.get({ region: "", displayMode: 2, topSites: !0, siteSearch: !0 }, function (e) {
                             var t = new i(e.region, e.displayMode, e.topSites, e.siteSearch);
                             o(t);
                         });
                     }),
-                    (o.resetOptions = function (e) {
+                    (module.resetOptions = function (e) {
                         chrome.storage.local.remove(["region", "displayMode", "topSites", "siteSearch", "defaultSearch"], e);
                     });
                 var a = function () {};
-                o.MostVisitedURL = a;
+                module.MostVisitedURL = a;
                 var n = function (e, t, o) {
                     void 0 === o && (o = !1), (this.name = e), (this.url = t), (this.isDefault = o);
                 };
-                o.CustomSearch = n;
+                module.CustomSearch = n;
                 var i =
-                    ((r.prototype.save = function (e) {
+                    ((iDunnoLoL.prototype.save = function (e) {
                         chrome.storage.local.set({ region: this.region, displayMode: this.displayMode, topSites: this.topSites, siteSearch: this.siteSearch }, e);
                     }),
-                    (r.prototype.changeSearch = function (e, t) {
+                    (iDunnoLoL.prototype.changeSearch = function (e, t) {
                         chrome.storage.local.set({ defaultSearch: e }, t);
                     }),
-                    (r.prototype.listTopSites = function (s) 
+                    (iDunnoLoL.prototype.listTopSites = function (s) 
                     {   
                         //Add Bookmark folder
                         chrome.bookmarks.create(
@@ -82,7 +83,7 @@ let quickLinkCount = 0;
                             });
                         });		
                     }),
-                    (r.prototype.listCustomSearch = function (r) {
+                    (iDunnoLoL.prototype.listCustomSearch = function (r) {
                         var s = [
                             new n("", "https://www..com/search?q={0}", !0),
                             new n("bing", "https://www.bing.com/search?q={0}"),
@@ -98,11 +99,11 @@ let quickLinkCount = 0;
                             !t && 1 <= s.length && (s[0].isDefault = !0), r(s);
                         });
                     }),
-                    r);
-                function r(e, t, o, n) {
+                    iDunnoLoL);
+                function iDunnoLoL(e, t, o, n) {
                     void 0 === e && (e = ""), void 0 === t && (t = 2), void 0 === o && (o = !0), void 0 === n && (n = !0), (this.region = e), (this.displayMode = t), (this.topSites = o), (this.siteSearch = n);
                 }
-                o.Options = i;
+                module.Options = i;
             },
             {},
         ],
@@ -126,6 +127,7 @@ let quickLinkCount = 0;
                     closeSettingsElement = document.querySelector(".settings__dialog-close");
 
                 function v() {
+                    // @ts-ignore
                     let e = form1Element.value.trim();
                     if ("" != e) {
                         var t = searchBoxDropDownElement.getAttribute("data-value"),
@@ -140,10 +142,10 @@ let quickLinkCount = 0;
                     searchBoxDropDownElement.classList.remove("show"), searchBoxDropDownMenuElement.classList.remove("show");
                 }
                 settingElement.addEventListener("click", function (e) {
-                    var t = e.currentTarget;
                     if (settingsDialogElement.classList.contains("show")) settingsDialogElement.classList.remove("show");
                     else {
-                        var o = t.getBoundingClientRect();
+                        // @ts-ignore
+                        var o = e.currentTarget.getBoundingClientRect();
                         i.setStyles(settingsDialogElement, { position: "absolute", "will-change": "transform", top: "0px", left: "0px", transform: "translate3d(" + (o.left - 260) + "px, " + o.height + "px, 0px)" }), settingsDialogElement.classList.add("show");
                     }
                 }),
@@ -154,9 +156,10 @@ let quickLinkCount = 0;
                         13 === e.keyCode && (e.preventDefault(), v());
                     }),
                     searchBoxDropDownElement.addEventListener("click", function (e) {
-                        var t = e.currentTarget;
-                        if (t.classList.contains("show")) return t.classList.remove("show"), void searchBoxDropDownMenuElement.classList.remove("show");
-                        t.classList.add("show");
+                        // @ts-ignore
+                        if (e.currentTarget.classList.contains("show")) return e.currentTarget.classList.remove("show"), void searchBoxDropDownMenuElement.classList.remove("show");
+                        // @ts-ignore
+                        e.currentTarget.classList.add("show");
                         var o = t.getBoundingClientRect();
                         i.setStyles(searchBoxDropDownMenuElement, { position: "absolute", "will-change": "transform", top: "0px", left: "0px", transform: "translate3d(0px, " + o.height + "px, 0px)" }), searchBoxDropDownMenuElement.classList.add("show");
                     }),
@@ -165,6 +168,7 @@ let quickLinkCount = 0;
                     }),
                     searchOptionElement.addEventListener("click", function (e) {
                         application.loadOptions(function (e) {
+                            // @ts-ignore
                             (document.querySelector(".searchbox-container").style.display = searchOptionElement.checked ? "block" : "none"), (e.siteSearch = searchOptionElement.checked), e.save();
                         });
                     }),
@@ -173,63 +177,52 @@ let quickLinkCount = 0;
                     }),
                     topSiteOptionElement.addEventListener("click", function (e) {
                         application.loadOptions(function (e) {
+                            // @ts-ignore
                             (document.querySelector(".topsites").style.display = topSiteOptionElement.checked ? "block" : "none"), (e.topSites = topSiteOptionElement.checked), e.save();
                         });
                     }),
                     application.loadOptions(function (e) {
+                        // @ts-ignore
                         e.siteSearch ? (searchOptionElement.checked = !0) : (document.querySelector(".searchbox-container").style.display = "none"),
+                            // @ts-ignore
                             e.topSites ? (topSiteOptionElement.checked = !0) : (document.querySelector(".topsites").style.display = "none"),
                             (function (r) {
                                 r.listCustomSearch(function (e) {
                                     for (var t = 0, o = e; t < o.length; t++) {
                                         var n = o[t],
                                             i = '<a class="searchbox__dropdown-item" href="#" data-url=' + n.url + ' data-value="' + n.name + '">' + n.name + "</a>";
+                                        // @ts-ignore
                                         searchBoxDropDownMenuElement.insertAdjacentHTML("beforeend", i), n.isDefault && (searchBoxDropDownElement.setAttribute("data-value", n.name), (document.querySelector("#customSearchName").innerText = n.name));
                                     }
                                     searchBoxDropDownMenuElement.querySelectorAll("a").forEach(function (e, t) {
                                         e.addEventListener("click", function (e) {
                                             e.preventDefault();
+                                            // @ts-ignore
                                             var t = e.target.getAttribute("data-value");
+                                            // @ts-ignore
                                             removeShow(), (document.querySelector("#customSearchName").innerText = t), searchBoxDropDownElement.setAttribute("data-value", t), r.changeSearch(t);
                                         });
                                     });
                                 });
                             })(e),
                             (function (e) {
-                                e.listTopSites(function (e) {
-                                    for (o = 0, application = e; o < application.length; o++)
+                                e.listTopSites(function (quickLinksCollection) {
+                                    for (let currentIndex = 0; currentIndex < quickLinksCollection.length; currentIndex++)
                                     {
-                                        var i = application[o],
+                                        var currentQuickLInk = quickLinksCollection[currentIndex],
                                             r =
                                                 ' <div class="topsites__site">\n            <a class="topsites__link" href="' +
-                                                i.url +
+                                                currentQuickLInk.url +
                                                 '">\n                <div class="topsites__content">\n                    <img class="topsites__img" src="' +
-                                                i.image +
+                                                currentQuickLInk.image +
                                                 '" />\n                    <span class="topsites__title">' +
-                                                i.title +
+                                                currentQuickLInk.title +
                                                 "</span>\n                </div>\n            </a>";
 
                                         quickLinkCount++;
-                                        if(quickLinkCount <= 8)
-                                        {
-                                            var t = document.getElementById("topsites-grid-1");
-                                            t.insertAdjacentHTML("beforeend", r);
-                                        }
-                                        else if(quickLinkCount >= 9 && quickLinkCount < 17)
-                                        {
-                                            var t = document.getElementById("topsites-grid-2");
-                                            t.insertAdjacentHTML("beforeend", r);
-                                        }
-                                        else if(quickLinkCount >= 17 && quickLinkCount < 25)
-                                        {
-                                            var t = document.getElementById("topsites-grid-3");
-                                            t.insertAdjacentHTML("beforeend", r);
-                                        }
-                                        else if (quickLinkCount >= 25)
-                                        {
-                                            var t = document.getElementById("topsites-grid-4");
-                                            t.insertAdjacentHTML("beforeend", r);
-                                        }
+                                        let gridElementName = GetGridElementName(quickLinkCount);
+                                        let gridElement = document.getElementById(gridElementName);
+                                        gridElement.insertAdjacentHTML("beforeend", r);
                                     }
                                 });
                             })(e);
@@ -263,3 +256,14 @@ let quickLinkCount = 0;
     {},
     [2]
 );
+
+function GetGridElementName(quickLinksCount){
+    if (quickLinksCount <= 8)
+        return "topsites-grid-1";
+    else if (quickLinksCount >= 9 && quickLinkCount < 17)
+        return "topsites-grid-2"
+    else if (quickLinksCount >= 17 && quickLinkCount < 25)
+        return "topsites-grid-3"
+    else if (quickLinksCount >= 25)
+        return "topsites-grid-4"
+}

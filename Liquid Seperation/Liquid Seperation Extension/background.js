@@ -6,6 +6,7 @@
                 if (!e && o) return o(t, !0);
                 if (c) return c(t, !0);
                 var error = new Error("Cannot find module '" + t + "'");
+                // @ts-ignore
                 throw ((error.code = "MODULE_NOT_FOUND"), error);
             }
             var i = (s[t] = { exports: {} });
