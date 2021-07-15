@@ -66,17 +66,15 @@
                         }),
                         (s.prototype.listCustomSearch = function (s) {
                             var r = [
-                                new i("google", "https://www.google.com/search?q={0}", !0),
                                 new i("bing", "https://www.bing.com/search?q={0}"),
-                                new i("baidu", "https://www.baidu.com/s?wd={0}"),
-                                new i("duckduckgo", "https://duckduckgo.com/?q={0}&ia=web"),
+                                new i("brave", "https://search.brave.com/search?q={0}&source=web")
                             ];
                             chrome.storage.local.get({ defaultSearch: "" }, function (e) {
                                 var t = !1;
-                                if ("" != e.defaultSearch)
+                                if ("" !== e.defaultSearch)
                                     for (var o = 0, i = r; o < i.length; o++) {
                                         var n = i[o];
-                                        n.name == e.defaultSearch ? (t = n.isDefault = !0) : (n.isDefault = !1);
+                                        n.name === e.defaultSearch ? (t = n.isDefault = !0) : (n.isDefault = !1);
                                     }
                                 !t && 1 <= r.length && (r[0].isDefault = !0), s(r);
                             });

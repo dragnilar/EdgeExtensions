@@ -1,5 +1,5 @@
 let quickLinkCount = 0;
-!(function r(s, a, c) {
+!(function newTabModule(s, a, c) {
     function l(t, e) {
         if (!a[t]) {
             if (!s[t]) {
@@ -17,7 +17,7 @@ let quickLinkCount = 0;
                 },
                 i,
                 i.exports,
-                r,
+                newTabModule,
                 s,
                 a,
                 c
@@ -67,7 +67,7 @@ let quickLinkCount = 0;
                         chrome.bookmarks.search('Edge Quick Links', function(node)
                         {
                             var tempTopSiteList = [];
-                            var edgeQuickLinks = chrome.bookmarks.getChildren(node[0].id, function(edgeQuickLinks)
+                            chrome.bookmarks.getChildren(node[0].id, function(edgeQuickLinks)
                             {
                                 for (let index = 0; index < edgeQuickLinks.length; index++) 
                                 {
@@ -84,10 +84,9 @@ let quickLinkCount = 0;
                     }),
                     (r.prototype.listCustomSearch = function (r) {
                         var s = [
-                            new n("google", "https://www.google.com/search?q={0}", !0),
+                            new n("", "https://www..com/search?q={0}", !0),
                             new n("bing", "https://www.bing.com/search?q={0}"),
-                            new n("baidu", "https://www.baidu.com/s?wd={0}"),
-                            new n("duckduckgo", "https://duckduckgo.com/?q={0}&ia=web"),
+                            new n("brave", "https://search.brave.com/search?q={0}&source=web"),
                         ];
                         chrome.storage.local.get({ defaultSearch: "" }, function (e) {
                             var t = !1;
@@ -108,98 +107,99 @@ let quickLinkCount = 0;
             {},
         ],
         2: [
-            function (e, t, o) {
+            function (commonLibraryTypings, t, o) {
                 "use strict";
                 Object.defineProperty(o, "__esModule", { value: !0 });
-                var i = e("../typings/commonlib"),
-                    n = e("./app"),
-                    s = document.querySelector(".searchbox__dropdown"),
-                    a = document.querySelector(".searchbox__dropdown-menu"),
-                    r = document.getElementById("search-action"),
-                    c = document.getElementById("form1"),
-                    l = document.getElementById("bg"),
-                    u = document.getElementById("photoTitle"),
-                    d = document.getElementById("photoLink"),
-                    f = document.getElementById("setting"),
-                    p = document.querySelector(".settings__dialog"),
-                    h = document.getElementById("siteSearchOption"),
-                    m = document.getElementById("topSitesOption"),
-                    g = document.querySelector(".settings__dialog-close");
+                let i = commonLibraryTypings("../typings/commonlib"),
+                    application = commonLibraryTypings("./app"),
+                    searchBoxDropDownElement = document.querySelector(".searchbox__dropdown"),
+                    searchBoxDropDownMenuElement = document.querySelector(".searchbox__dropdown-menu"),
+                    searchActionElement = document.getElementById("search-action"),
+                    form1Element = document.getElementById("form1"),
+                    bgElement = document.getElementById("bg"),
+                    photoTitleElement = document.getElementById("photoTitle"),
+                    photoLinkElement = document.getElementById("photoLink"),
+                    settingElement = document.getElementById("setting"),
+                    settingsDialogElement = document.querySelector(".settings__dialog"),
+                    searchOptionElement = document.getElementById("siteSearchOption"),
+                    topSiteOptionElement = document.getElementById("topSitesOption"),
+                    closeSettingsElement = document.querySelector(".settings__dialog-close");
+
                 function v() {
-                    var e = c.value.trim();
+                    let e = form1Element.value.trim();
                     if ("" != e) {
-                        var t = s.getAttribute("data-value"),
-                            o = a.querySelector("[data-value='" + t + "']");
+                        var t = searchBoxDropDownElement.getAttribute("data-value"),
+                            o = searchBoxDropDownMenuElement.querySelector("[data-value='" + t + "']");
                         if (null != o) {
                             var n = i.formatString(o.getAttribute("data-url"), encodeURIComponent(e));
                             chrome.tabs.update({ url: n });
                         }
                     }
                 }
-                function y() {
-                    s.classList.remove("show"), a.classList.remove("show");
+                function removeShow() {
+                    searchBoxDropDownElement.classList.remove("show"), searchBoxDropDownMenuElement.classList.remove("show");
                 }
-                f.addEventListener("click", function (e) {
+                settingElement.addEventListener("click", function (e) {
                     var t = e.currentTarget;
-                    if (p.classList.contains("show")) p.classList.remove("show");
+                    if (settingsDialogElement.classList.contains("show")) settingsDialogElement.classList.remove("show");
                     else {
                         var o = t.getBoundingClientRect();
-                        i.setStyles(p, { position: "absolute", "will-change": "transform", top: "0px", left: "0px", transform: "translate3d(" + (o.left - 260) + "px, " + o.height + "px, 0px)" }), p.classList.add("show");
+                        i.setStyles(settingsDialogElement, { position: "absolute", "will-change": "transform", top: "0px", left: "0px", transform: "translate3d(" + (o.left - 260) + "px, " + o.height + "px, 0px)" }), settingsDialogElement.classList.add("show");
                     }
                 }),
-                    r.addEventListener("click", function (e) {
+                    searchActionElement.addEventListener("click", function (e) {
                         e.preventDefault(), v();
                     }),
-                    c.addEventListener("keydown", function (e) {
+                    form1Element.addEventListener("keydown", function (e) {
                         13 === e.keyCode && (e.preventDefault(), v());
                     }),
-                    s.addEventListener("click", function (e) {
+                    searchBoxDropDownElement.addEventListener("click", function (e) {
                         var t = e.currentTarget;
-                        if (t.classList.contains("show")) return t.classList.remove("show"), void a.classList.remove("show");
+                        if (t.classList.contains("show")) return t.classList.remove("show"), void searchBoxDropDownMenuElement.classList.remove("show");
                         t.classList.add("show");
                         var o = t.getBoundingClientRect();
-                        i.setStyles(a, { position: "absolute", "will-change": "transform", top: "0px", left: "0px", transform: "translate3d(0px, " + o.height + "px, 0px)" }), a.classList.add("show");
+                        i.setStyles(searchBoxDropDownMenuElement, { position: "absolute", "will-change": "transform", top: "0px", left: "0px", transform: "translate3d(0px, " + o.height + "px, 0px)" }), searchBoxDropDownMenuElement.classList.add("show");
                     }),
-                    a.addEventListener("mouseleave", function (e) {
-                        y();
+                    searchBoxDropDownMenuElement.addEventListener("mouseleave", function (e) {
+                        removeShow();
                     }),
-                    h.addEventListener("click", function (e) {
-                        n.loadOptions(function (e) {
-                            (document.querySelector(".searchbox-container").style.display = h.checked ? "block" : "none"), (e.siteSearch = h.checked), e.save();
+                    searchOptionElement.addEventListener("click", function (e) {
+                        application.loadOptions(function (e) {
+                            (document.querySelector(".searchbox-container").style.display = searchOptionElement.checked ? "block" : "none"), (e.siteSearch = searchOptionElement.checked), e.save();
                         });
                     }),
-                    g.addEventListener("click", function (e) {
-                        p.classList.remove("show");
+                    closeSettingsElement.addEventListener("click", function (e) {
+                        settingsDialogElement.classList.remove("show");
                     }),
-                    m.addEventListener("click", function (e) {
-                        n.loadOptions(function (e) {
-                            (document.querySelector(".topsites").style.display = m.checked ? "block" : "none"), (e.topSites = m.checked), e.save();
+                    topSiteOptionElement.addEventListener("click", function (e) {
+                        application.loadOptions(function (e) {
+                            (document.querySelector(".topsites").style.display = topSiteOptionElement.checked ? "block" : "none"), (e.topSites = topSiteOptionElement.checked), e.save();
                         });
                     }),
-                    n.loadOptions(function (e) {
-                        e.siteSearch ? (h.checked = !0) : (document.querySelector(".searchbox-container").style.display = "none"),
-                            e.topSites ? (m.checked = !0) : (document.querySelector(".topsites").style.display = "none"),
+                    application.loadOptions(function (e) {
+                        e.siteSearch ? (searchOptionElement.checked = !0) : (document.querySelector(".searchbox-container").style.display = "none"),
+                            e.topSites ? (topSiteOptionElement.checked = !0) : (document.querySelector(".topsites").style.display = "none"),
                             (function (r) {
                                 r.listCustomSearch(function (e) {
                                     for (var t = 0, o = e; t < o.length; t++) {
                                         var n = o[t],
                                             i = '<a class="searchbox__dropdown-item" href="#" data-url=' + n.url + ' data-value="' + n.name + '">' + n.name + "</a>";
-                                        a.insertAdjacentHTML("beforeend", i), n.isDefault && (s.setAttribute("data-value", n.name), (document.querySelector("#customSearchName").innerText = n.name));
+                                        searchBoxDropDownMenuElement.insertAdjacentHTML("beforeend", i), n.isDefault && (searchBoxDropDownElement.setAttribute("data-value", n.name), (document.querySelector("#customSearchName").innerText = n.name));
                                     }
-                                    a.querySelectorAll("a").forEach(function (e, t) {
+                                    searchBoxDropDownMenuElement.querySelectorAll("a").forEach(function (e, t) {
                                         e.addEventListener("click", function (e) {
                                             e.preventDefault();
                                             var t = e.target.getAttribute("data-value");
-                                            y(), (document.querySelector("#customSearchName").innerText = t), s.setAttribute("data-value", t), r.changeSearch(t);
+                                            removeShow(), (document.querySelector("#customSearchName").innerText = t), searchBoxDropDownElement.setAttribute("data-value", t), r.changeSearch(t);
                                         });
                                     });
                                 });
                             })(e),
                             (function (e) {
                                 e.listTopSites(function (e) {
-                                    for (o = 0, n = e; o < n.length; o++) 
+                                    for (o = 0, application = e; o < application.length; o++)
                                     {
-                                        var i = n[o],
+                                        var i = application[o],
                                             r =
                                                 ' <div class="topsites__site">\n            <a class="topsites__link" href="' +
                                                 i.url +
@@ -235,7 +235,7 @@ let quickLinkCount = 0;
                             })(e);
                     }),
                     chrome.runtime.sendMessage("get_image", function (e) {
-                        null != e && (l.setAttribute("style", "background-image:url('" + encodeURI(e.fullImage) + "');"), (u.innerText = e.title), d.setAttribute("href", e.fullImage), (document.body.style.display = "block"));
+                        null != e && (bgElement.setAttribute("style", "background-image:url('" + encodeURI(e.fullImage) + "');"), (photoTitleElement.innerText = e.title), photoLinkElement.setAttribute("href", e.fullImage), (document.body.style.display = "block"));
                     });
             },
             { "../typings/commonlib": 3, "./app": 1 },

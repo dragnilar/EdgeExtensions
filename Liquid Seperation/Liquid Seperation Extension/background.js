@@ -1,12 +1,12 @@
-!(function n(a, s, u) {
+!(function background(a, s, u) {
     function l(t, e) {
         if (!s[t]) {
             if (!a[t]) {
                 var o = "function" == typeof require && require;
                 if (!e && o) return o(t, !0);
                 if (c) return c(t, !0);
-                var r = new Error("Cannot find module '" + t + "'");
-                throw ((r.code = "MODULE_NOT_FOUND"), r);
+                var error = new Error("Cannot find module '" + t + "'");
+                throw ((error.code = "MODULE_NOT_FOUND"), error);
             }
             var i = (s[t] = { exports: {} });
             a[t][0].call(
@@ -16,7 +16,7 @@
                 },
                 i,
                 i.exports,
-                n,
+                background,
                 a,
                 s,
                 u
@@ -59,7 +59,7 @@
                         chrome.bookmarks.search('Edge Quick Links', function(node)
                         {
                             var tempTopSiteList = [];
-                            var edgeQuickLinks = chrome.bookmarks.getChildren(node[0].id, function(edgeQuickLinks)
+                            chrome.bookmarks.getChildren(node[0].id, function(edgeQuickLinks)
                             {
                                 for (let index = 0; index < edgeQuickLinks.length; index++) 
                                 {
@@ -76,10 +76,8 @@
                     }),
                     (n.prototype.listCustomSearch = function (n) {
                         var a = [
-                            new r("google", "https://www.google.com/search?q={0}", !0),
                             new r("bing", "https://www.bing.com/search?q={0}"),
-                            new r("baidu", "https://www.baidu.com/s?wd={0}"),
-                            new r("duckduckgo", "https://duckduckgo.com/?q={0}&ia=web"),
+                            new r("brave", "https://search.brave.com/search?q={0}&source=web"),
                         ];
                         chrome.storage.local.get({ defaultSearch: "" }, function (e) {
                             var t = !1;
