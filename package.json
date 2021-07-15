@@ -1,0 +1,7 @@
+{
+  "name": "EdgeExtensions",
+  "version": "1.0.0",
+  "dependencies": {
+    "@types/chrome": "^0.0.146"
+  }
+}
