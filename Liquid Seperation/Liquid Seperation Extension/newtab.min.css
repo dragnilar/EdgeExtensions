@@ -23,7 +23,7 @@
 }
 @media (min-width: 1200px) {
     .container {
-        max-width: 1400px;
+        max-width: 1600px;
     }
 }
 .col,
@@ -3051,7 +3051,7 @@ body {
     padding: 0;
     color: rgba(0, 0, 0, 0.87);
     font-size: 0.875rem;
-    font-family: "Fira Sans", Helvetica, sans-serif;
+    font-family: "Segoe UI", Helvetica, sans-serif;
 }
 a {
     text-decoration: none;
@@ -3150,10 +3150,11 @@ a {
     width: 100%;
     display: flex;
     flex: 1 1 100%;
-    background: #fff;
+    background: #4A4A4A;
+    color: #AFB1B3;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     transition: 0.2s;
-    border-radius: 5px;
+    border-radius: 25px;
     opacity: 0.9;
 }
 .searchbox:hover {
@@ -3166,6 +3167,8 @@ a {
     width: 100%;
     border: none;
     font-size: 1rem;
+    background: #4A4A4A;
+    color: #AFB1B3;
 }
 .searchbox__input:focus {
     border: none;
@@ -3176,8 +3179,8 @@ a {
     border: none;
     box-shadow: none;
     min-width: 50px;
-    background: #fff;
-    color: #1a1a1a;
+    background: #4A4A4A;
+    color: #AFB1B3;
     line-height: 1;
     position: relative;
     display: inline-flex;
@@ -3187,7 +3190,7 @@ a {
     text-decoration: none;
     white-space: nowrap;
     padding: 11px 24px;
-    border-radius: 3px;
+    border-radius: 25px;
 }
 .searchbox__dropdown-menu:before,
 .settings__dialog:before {
@@ -3204,13 +3207,15 @@ a {
 .searchbox__dropdown {
     display: flex;
     align-items: center;
-    color: #000;
+    background: #4A4A4A;
+    color: #AFB1B3;
     opacity: 0.65;
     transition: 0.2s;
     position: relative;
     font-size: 1rem;
     padding: 0 10px 0 15px;
     cursor: pointer;
+    border-radius: 25px;
 }
 .searchbox__svg-icon,
 .settings .btn-close {
@@ -3235,10 +3240,11 @@ a {
     justify-content: center;
 }
 .searchbox__svg-icon svg {
-    fill: #5e5e5e;
+    fill: #AFB1B3;
 }
 .searchbox__dropdown-menu {
-    background-color: transparent;
+    background: #4A4A4A;
+    color: #AFB1B3;
     border-radius: 2px;
     color: inherit;
     float: left;
@@ -3260,7 +3266,8 @@ a {
     opacity: 1;
 }
 .searchbox__dropdown-menu:before {
-    background-color: #fff;
+    background: #4A4A4A;
+    color: #AFB1B3;
     border-radius: 2px;
     display: block;
     left: 0;
@@ -3271,7 +3278,8 @@ a {
 }
 .searchbox__dropdown-item {
     display: block;
-    color: #000;
+    background: #4A4A4A;
+    color: #AFB1B3;
     padding: 0.45rem 1rem;
     position: relative;
     transition: 0.2s;
@@ -3371,7 +3379,8 @@ a {
     transition: all 0.1s ease-in-out;
 }
 .settings__btn:hover {
-    background-color: #111;
+    background-color: rgba(158, 158, 158, 0.45);
+    border-radius: 4px;
 }
 .settings__btn i {
     font-size: 1.3rem;
@@ -3390,20 +3399,15 @@ a {
     position: relative;
 }
 .topsites__site {
-    width: 95px;
-    height: 95px;
-    background-color: #4A4A4A;
+    width: 108px;
+    height: 84px;
     flex-shrink: 0;
-    opacity: 0.95;
-    box-shadow: 0 1.6px 3.6px rgba(0, 0, 0, 0.13), 0 0.3px 0.9px rgba(0, 0, 0, 0.11);
+    /*box-shadow: 0 1.6px 3.6px rgba(0, 0, 0, 0.13), 0 0.3px 0.9px rgba(0, 0, 0, 0.11);*/
 }
 @media (max-width: 991.98px) {
     .topsites__site:nth-child(n + 5) {
         display: none;
     }
-}
-.topsites__site:hover {
-    background-color: #fff;
 }
 .topsites__content {
     box-sizing: border-box;
@@ -3414,29 +3418,48 @@ a {
     width: 100%;
     height: 100%;
     padding: 12px;
+    opacity: 0.85;
+}
+.topsites__content:hover {
+    background-color: rgba(158, 158, 158, 0.45);
+}
+.topsites__content:active{
+    border-color: #c8cbcf;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 4px;
 }
 .topsites__img {
-    display: block;
-    margin: 8px 0 0;
     max-width: 100%;
-    height: auto;
-    max-height: 24px;
+    height: 55px;
+    width: 55px;
+    background-color: #4A4A4A;
+    align-items: center;
+    box-sizing: border-box;
+    justify-content: center;
+    display: flex;
+    border-radius: 6px;
+    border-style: solid;
+    border-width: 10px;
+    border-color: #4A4A4A;
 }
 .topsites__title {
-    font-size: 12px;
+    font-size: 13px;
     line-height: 16px;
     overflow: hidden;
     box-sizing: content-box;
     max-height: 16px;
     white-space: nowrap;
-    max-width: 100%;
-    margin: 17px 0 0;
-    padding: 0;
-    text-decoration: none;
-    font-family: inherit;
+    /*max-width: 100%;*/
+    /*margin: 10px 0 0;*/
+    bottom: -25px;
+    position: absolute;
+    /*padding: 0;*/
+    /*text-decoration: none;*/
+    font-family: "Segoe UI Semibold", Helvetica, SansSerif;
     text-overflow: ellipsis;
     font-weight: 400;
-    color: #ffffff;
+    color: #d8d8e0;
 }
 .topsites__open-link {
     position: absolute;
@@ -3464,7 +3487,7 @@ a {
     justify-content: flex-start;
     text-align: center;
     max-width: 100%;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 .topsites-grid > div:not(:first-child) {
     margin-left: 16px;

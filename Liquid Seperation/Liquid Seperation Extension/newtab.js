@@ -261,10 +261,10 @@ let quickLinkCount = 0;
 function GetGridElementName(quickLinksCount){
     if (quickLinksCount <= 10)
         return "topsites-grid-1";
-    else if (quickLinksCount >= 11 && quickLinkCount < 21)
+    else if (quickLinksCount >= 10 && quickLinkCount < 21)
         return "topsites-grid-2"
-    else if (quickLinksCount >= 19 && quickLinkCount < 29)
+    else if (quickLinksCount >= 21 && quickLinkCount < 31)
         return "topsites-grid-3"
-    else if (quickLinksCount >= 29)
+    else if (quickLinksCount >= 31)
         return "topsites-grid-4"
 }
