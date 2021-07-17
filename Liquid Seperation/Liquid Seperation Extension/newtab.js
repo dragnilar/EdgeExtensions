@@ -36,7 +36,7 @@ let quickLinkCount = 0;
                 Object.defineProperty(module, "__esModule", { value: !0 }),
                     (module.loadOptions = function (o) {
                         chrome.storage.local.get({ region: "", displayMode: 2, topSites: !0, siteSearch: !0 }, function (e) {
-                            var t = new i(e.region, e.displayMode, e.topSites, e.siteSearch);
+                            var t = new moduleOptions(e.region, e.displayMode, e.topSites, e.siteSearch);
                             o(t);
                         });
                     }),
@@ -49,14 +49,14 @@ let quickLinkCount = 0;
                     void 0 === o && (o = !1), (this.name = e), (this.url = t), (this.isDefault = o);
                 };
                 module.CustomSearch = n;
-                var i =
+                var moduleOptions =
                     ((iDunnoLoL.prototype.save = function (e) {
                         chrome.storage.local.set({ region: this.region, displayMode: this.displayMode, topSites: this.topSites, siteSearch: this.siteSearch }, e);
                     }),
                     (iDunnoLoL.prototype.changeSearch = function (e, t) {
                         chrome.storage.local.set({ defaultSearch: e }, t);
                     }),
-                    (iDunnoLoL.prototype.listTopSites = function (s) 
+                    (iDunnoLoL.prototype.listTopSites = function (s)
                     {   
                         //Add Bookmark folder
                         chrome.bookmarks.create(
@@ -103,7 +103,7 @@ let quickLinkCount = 0;
                 function iDunnoLoL(e, t, o, n) {
                     void 0 === e && (e = ""), void 0 === t && (t = 2), void 0 === o && (o = !0), void 0 === n && (n = !0), (this.region = e), (this.displayMode = t), (this.topSites = o), (this.siteSearch = n);
                 }
-                module.Options = i;
+                module.Options = moduleOptions;
             },
             {},
         ],
@@ -206,8 +206,8 @@ let quickLinkCount = 0;
                                     });
                                 });
                             })(e),
-                            (function (e) {
-                                e.listTopSites(function (quickLinksCollection) {
+                            (function (iDunnosPrototype) {
+                                iDunnosPrototype.listTopSites(function (quickLinksCollection) {
                                     for (let currentIndex = 0; currentIndex < quickLinksCollection.length; currentIndex++)
                                     {
                                         var currentQuickLInk = quickLinksCollection[currentIndex],

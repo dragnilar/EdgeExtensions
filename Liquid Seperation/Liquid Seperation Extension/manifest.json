@@ -1,6 +1,8 @@
 {
    "background": {
-      "scripts": [ "background.js" ]
+      "scripts": [
+         "background.js"
+      ]
    },
    "chrome_url_overrides": {
       "newtab": "newtab.html"
@@ -14,6 +16,12 @@
    "manifest_version": 2,
    "name": "Liquid Seperation",
    "options_page": "options.html",
-   "permissions": [ "storage", "alarms", "topSites", "bookmarks", "chrome://favicon/*", "https://peapix.com/*" ],
+   "permissions": [
+      "storage",
+      "alarms",
+      "bookmarks",
+      "chrome://favicon/*",
+      "https://peapix.com/*"
+   ],
    "version": "1.0.0"
 }
