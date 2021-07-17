@@ -170,7 +170,7 @@ let quickLinkCount = 0;
                     searchOptionElement.addEventListener("click", function (e) {
                         application.loadOptions(function (e) {
                             // @ts-ignore
-                            (document.querySelector(".searchbox-container").style.display = searchOptionElement.checked ? "block" : "none"), (e.siteSearch = searchOptionElement.checked), e.save();
+                            (document.getElementById("SearchBoxDiv").style.display = searchOptionElement.checked ? "block" : "none"), (e.siteSearch = searchOptionElement.checked), e.save();
                         });
                     }),
                     closeSettingsElement.addEventListener("click", function (e) {
@@ -179,14 +179,14 @@ let quickLinkCount = 0;
                     topSiteOptionElement.addEventListener("click", function (e) {
                         application.loadOptions(function (e) {
                             // @ts-ignore
-                            (document.querySelector(".topsites").style.display = topSiteOptionElement.checked ? "block" : "none"), (e.topSites = topSiteOptionElement.checked), e.save();
+                            (document.getElementById("TopSitesDiv").style.display = topSiteOptionElement.checked ? "block" : "none"), (e.topSites = topSiteOptionElement.checked), e.save();
                         });
                     }),
                     application.loadOptions(function (e) {
                         // @ts-ignore
-                        e.siteSearch ? (searchOptionElement.checked = !0) : (document.querySelector(".searchbox-container").style.display = "none"),
+                        e.siteSearch ? (searchOptionElement.checked = !0) : (document.getElementById("SearchBoxDiv").style.display = "none"),
                             // @ts-ignore
-                            e.topSites ? (topSiteOptionElement.checked = !0) : (document.querySelector(".topsites").style.display = "none"),
+                            e.topSites ? (topSiteOptionElement.checked = !0) : (document.getElementById("TopSitesDiv").style.display = "none"),
                             (function (r) {
                                 r.listCustomSearch(function (e) {
                                     for (var t = 0, o = e; t < o.length; t++) {

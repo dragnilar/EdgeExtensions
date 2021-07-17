@@ -25,14 +25,66 @@ window.onload = function ()
     {
         SetOptionsOrReplaceWithDefaults(optionsArray);
     });
-    NewTabPage();
+    HookUpEventListeners();
     GetPageElements();
     SetupQuickLinks();
     document.body.style.display = "block";
 }
-function NewTabPage()
-{
-}
+function HookUpEventListeners() {
+    settingElement.addEventListener("click", function (clickEventArgs) {
+        if (settingsDialogElement.classList.contains("show"))
+            settingsDialogElement.classList.remove("show");
+        else {
+            // @ts-ignore
+            clickEventArgs.currentTarget.getBoundingClientRect();
+            settingsDialogElement.style.setProperty("position", "absolute");
+            settingsDialogElement.style.setProperty("will-change", "transform");
+            settingsDialogElement.style.setProperty("top", "0px");
+            settingsDialogElement.style.setProperty("left", "0px");
+            settingsDialogElement.style.setProperty("transform", "\"translate3d(\" + (o.left - 260) + \"px, \" + o.height + \"px, 0px)\"");
+            settingsDialogElement.classList.add("show");
+        }});
+
+        searchActionElement.addEventListener("click", function (clickEventArgs) {
+            clickEventArgs.preventDefault(), SetSearchActionElement();
+        });
+        form1Element.addEventListener("keydown", function (keyDownEventArgs) {
+            13 === keyDownEventArgs.keyCode && (keyDownEventArgs.preventDefault(), SetSearchActionElement());
+        });
+        searchBoxDropDownElement.addEventListener("click", function (args) {
+            // @ts-ignore
+            if (args.currentTarget.classList.contains("show")) return args.currentTarget.classList.remove("show"), void searchBoxDropDownMenuElement.classList.remove("show");
+            // @ts-ignore
+            args.currentTarget.classList.add("show");
+            // @ts-ignore
+            let o = args.currentTarget.getBoundingClientRect();
+            searchBoxDropDownMenuElement.style.setProperty("position", "absolute");
+            searchBoxDropDownMenuElement.style.setProperty("will-change", "transform");
+            searchBoxDropDownMenuElement.style.setProperty("top", "0px");
+            searchBoxDropDownMenuElement.style.setProperty("left", "0px");
+            searchBoxDropDownMenuElement.style.setProperty("transform", "translate3d(0px, " + o.height + "px, 0px)");
+            searchBoxDropDownMenuElement.classList.add("show");
+        });
+        searchBoxDropDownMenuElement.addEventListener("mouseleave", function (args) {
+            removeShow();
+        });
+        searchOptionElement.addEventListener("click", function () {
+            var searchBoxContainerElement = document.getElementById("SearchBoxDiv");
+            searchBoxContainerElement.style.display = searchOptionElement.checked ? "block" : "none";
+            showWebSearch = searchOptionElement.checked;
+            chrome.storage.local.set({showSearch: showWebSearch});
+        });
+        closeSettingsElement.addEventListener("click", function () {
+            settingsDialogElement.classList.remove("show");
+        });
+        topSiteOptionElement.addEventListener("click", function () {
+            var topSiteElement = document.getElementById("TopSitesDiv");
+            topSiteElement.style.display = topSiteOptionElement.checked ? "block" : "none";
+            showBookmarkLinks = topSiteOptionElement.checked;
+            chrome.storage.local.set({showQuickLink: showBookmarkLinks});
+        });
+
+    }
 function GetPageElements()
 {
     searchBoxDropDownElement = document.querySelector(".searchbox__dropdown");
@@ -134,6 +186,22 @@ function ResetOptions (){
 }
 function GetBookMarkFavicon(bookMarkUrl){
     return "chrome://favicon/size/64/" + bookMarkUrl;
+}
+
+function SetSearchActionElement() {
+        // @ts-ignore
+        let e = form1Element.value.trim();
+        if ("" != e) {
+            var t = searchBoxDropDownElement.getAttribute("data-value"),
+                o = searchBoxDropDownMenuElement.querySelector("[data-value='" + t + "']");
+            if (null != o) {
+                let n = searchActionElement.formatString(o.getAttribute("data-url"), encodeURIComponent(e));
+                chrome.tabs.update({ url: n });
+            }
+        }
+    }
+function removeShow() {
+    searchBoxDropDownElement.classList.remove("show"), searchBoxDropDownMenuElement.classList.remove("show");
 }
 
 function GetGridElementName(quickLinksCount){
