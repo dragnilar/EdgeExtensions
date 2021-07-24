@@ -120,11 +120,8 @@ let quickLinkCount = 0;
                     bgElement = document.getElementById("bg"),
                     photoTitleElement = document.getElementById("photoTitle"),
                     photoLinkElement = document.getElementById("photoLink"),
-                    settingElement = document.getElementById("setting"),
-                    settingsDialogElement = document.querySelector(".settings__dialog"),
                     searchOptionElement = document.getElementById("siteSearchOption"),
                     topSiteOptionElement = document.getElementById("topSitesOption"),
-                    closeSettingsElement = document.querySelector(".settings__dialog-close"),
                     goToOptionsButtonElement = document.getElementById("GoToOptionsButton");
 
                 function v() {
@@ -142,14 +139,6 @@ let quickLinkCount = 0;
                 function removeShow() {
                     searchBoxDropDownElement.classList.remove("show"), searchBoxDropDownMenuElement.classList.remove("show");
                 }
-                settingElement.addEventListener("click", function (e) {
-                    if (settingsDialogElement.classList.contains("show")) settingsDialogElement.classList.remove("show");
-                    else {
-                        // @ts-ignore
-                        var o = e.currentTarget.getBoundingClientRect();
-                        i.setStyles(settingsDialogElement, { position: "absolute", "will-change": "transform", top: "0px", left: "0px", transform: "translate3d(" + (o.left - 260) + "px, " + o.height + "px, 0px)" }), settingsDialogElement.classList.add("show");
-                    }
-                }),
                     goToOptionsButtonElement.addEventListener("click", function (e){
                         window.open((chrome.runtime.getURL('options.html')));
                     }),
@@ -176,9 +165,6 @@ let quickLinkCount = 0;
                             // @ts-ignore
                             (document.getElementById("SearchBoxDiv").style.display = searchOptionElement.checked ? "block" : "none"), (e.siteSearch = searchOptionElement.checked), e.save();
                         });
-                    }),
-                    closeSettingsElement.addEventListener("click", function (e) {
-                        settingsDialogElement.classList.remove("show");
                     }),
                     topSiteOptionElement.addEventListener("click", function (e) {
                         application.loadOptions(function (e) {
