@@ -1,5 +1,6 @@
 // let quickLinkCount = 0;
 import KeyEventEvent = chrome.input.ime.KeyEventEvent;
+import request = chrome.permissions.request;
 
 let newTabQuickLinkCount = 0;
 let searchBoxDropDownElement: Element = null,
@@ -13,14 +14,25 @@ let searchBoxDropDownElement: Element = null,
     settingsDialogElement: HTMLElement = null,
     searchOptionElement: HTMLInputElement = null,
     topSiteOptionElement: HTMLInputElement = null,
-    closeSettingsElement: HTMLInputElement = null,
     goToOptionsButtonElement: HTMLButtonElement = null,
     //Default settings
-    searchRegion : string = "https://www.bing.com/search?`={0}",
+    searchRegion : string = "",
     bgDisplayMode : number = 2,
     webSearchSite : string = null,
     showWebSearch : boolean = true,
     showBookmarkLinks : boolean = true;
+
+function GetBackground() {
+    let urlEnd = searchRegion != "" ? '?country=' + '${searchRegion}' : "";
+    let url = "https://peapix.com/bing/feed" + urlEnd;
+    let request = new XMLHttpRequest();
+    request.addEventListener("load", ev => {
+        var response = JSON.parse(request.responseText);
+        console.log(response.toString());
+    });
+    request.open("GET", url);
+    request.send();
+}
 
 window.onload = function ()
 {
@@ -31,23 +43,23 @@ window.onload = function ()
     GetPageElements();
     HookUpEventListeners();
     SetupQuickLinks();
+    GetBackground()
     document.body.style.display = "block";
 }
 function GetPageElements()
 {
     searchBoxDropDownElement = document.querySelector(".searchbox__dropdown");
     searchBoxDropDownMenuElement = document.querySelector(".searchbox__dropdown-menu");
-    searchActionElement = document.querySelector("search-action");
+    searchActionElement = document.getElementById("search-action");
     form1Element = document.getElementById("form1");
     bgElement = document.getElementById("bg");
     photoTitleElement = document.getElementById("photoTitle");
     photoLinkElement = document.getElementById("photoLink");
     settingElement = document.getElementById("setting");
     settingsDialogElement = document.querySelector(".settings__dialog");
-    searchOptionElement = document.querySelector("siteSearchOption");
-    topSiteOptionElement = document.querySelector("topSitesOption");
-    closeSettingsElement = document.querySelector(".settings__dialog-close");
-    goToOptionsButtonElement = document.querySelector(".GoToOptionsButton");
+    searchOptionElement = document.getElementById("siteSearchOption") as HTMLInputElement;
+    topSiteOptionElement = document.getElementById("topSitesOption") as HTMLInputElement;
+    goToOptionsButtonElement = document.getElementById("GoToOptionsButton") as HTMLButtonElement;
 }
 function HookUpEventListeners() {
     settingElement.addEventListener("click", function (clickEventArgs) {
@@ -94,9 +106,6 @@ function HookUpEventListeners() {
             searchBoxContainerElement.style.display = searchOptionElement.checked ? "block" : "none";
             showWebSearch = searchOptionElement.checked;
             chrome.storage.local.set({showSearch: showWebSearch});
-        });
-        closeSettingsElement.addEventListener("click", function () {
-            settingsDialogElement.classList.remove("show");
         });
         topSiteOptionElement.addEventListener("click", function () {
             var topSiteElement = document.getElementById("TopSitesDiv");
