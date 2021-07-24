@@ -1,23 +1,25 @@
 // let quickLinkCount = 0;
+import KeyEventEvent = chrome.input.ime.KeyEventEvent;
+
 let newTabQuickLinkCount = 0;
-let searchBoxDropDownElement = null,
-    searchBoxDropDownMenuElement = null,
-    searchActionElement = null,
-    form1Element = null,
-    bgElement = null,
-    photoTitleElement = null,
-    photoLinkElement = null,
-    settingElement = null,
-    settingsDialogElement = null,
-    searchOptionElement = null,
-    topSiteOptionElement = null,
-    closeSettingsElement = null,
+let searchBoxDropDownElement: Element = null,
+    searchBoxDropDownMenuElement : HTMLElement = null,
+    searchActionElement : any = null,
+    form1Element : Element = null,
+    bgElement: Element = null,
+    photoTitleElement: Element = null,
+    photoLinkElement: Element = null,
+    settingElement: Element = null,
+    settingsDialogElement: HTMLElement = null,
+    searchOptionElement: HTMLInputElement = null,
+    topSiteOptionElement: HTMLInputElement = null,
+    closeSettingsElement: HTMLInputElement = null,
     //Default settings
-    searchRegion = "https://www.bing.com/search?`={0}",
-    bgDisplayMode = 2,
-    webSearchSite = null,
-    showWebSearch = true,
-    showBookmarkLinks = true;
+    searchRegion : string = "https://www.bing.com/search?`={0}",
+    bgDisplayMode : number = 2,
+    webSearchSite : string = null,
+    showWebSearch : boolean = true,
+    showBookmarkLinks : boolean = true;
 
 window.onload = function ()
 {
@@ -48,8 +50,8 @@ function HookUpEventListeners() {
         searchActionElement.addEventListener("click", function (clickEventArgs) {
             clickEventArgs.preventDefault(), SetSearchActionElement();
         });
-        form1Element.addEventListener("keydown", function (keyDownEventArgs) {
-            13 === keyDownEventArgs.keyCode && (keyDownEventArgs.preventDefault(), SetSearchActionElement());
+        form1Element.addEventListener("keydown", function (keyDownEventArgs: KeyboardEvent) {
+            "13" === keyDownEventArgs.code && (keyDownEventArgs.preventDefault(), SetSearchActionElement());
         });
         searchBoxDropDownElement.addEventListener("click", function (args) {
             // @ts-ignore
@@ -89,15 +91,15 @@ function GetPageElements()
 {
     searchBoxDropDownElement = document.querySelector(".searchbox__dropdown");
     searchBoxDropDownMenuElement = document.querySelector(".searchbox__dropdown-menu");
-    searchActionElement = document.getElementById("search-action");
+    searchActionElement = document.querySelector("search-action");
     form1Element = document.getElementById("form1");
     bgElement = document.getElementById("bg");
     photoTitleElement = document.getElementById("photoTitle");
     photoLinkElement = document.getElementById("photoLink");
     settingElement = document.getElementById("setting");
     settingsDialogElement = document.querySelector(".settings__dialog");
-    searchOptionElement = document.getElementById("siteSearchOption");
-    topSiteOptionElement = document.getElementById("topSitesOption");
+    searchOptionElement = document.querySelector("siteSearchOption");
+    topSiteOptionElement = document.querySelector("topSitesOption");
     closeSettingsElement = document.querySelector(".settings__dialog-close");
 }
 
@@ -127,6 +129,9 @@ function SetOptionsOrReplaceWithDefaults(optionsArray)
 
 class QuickLink
     {
+        title : string;
+        url : string;
+        image : string;
     constructor(title, url, image)
     {
         this.title = title;
@@ -204,6 +209,7 @@ function removeShow() {
     searchBoxDropDownElement.classList.remove("show"), searchBoxDropDownMenuElement.classList.remove("show");
 }
 
+// @ts-ignore
 function GetGridElementName(quickLinksCount){
     if (quickLinksCount <= 10)
         return "topsites-grid-1";

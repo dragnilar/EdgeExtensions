@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "name": "Dark Green Theme",
+  "manifest_version": 2,
+  "theme": {
+    "images" : {
+    },
+    "colors" : {
+      "frame" : [22, 24, 66],
+	  "frame_inactive": [22, 24,66],
+	  "frame_incognito":[22, 24, 66],
+	  "frame_incognito_inactive":[22,24,66],
+	  "background_tab":[22,24,66],
+	  "background_tab_inactive":[22,24,66],
+	  "background_tab_incognito":[22,24,66],
+	  "background_tab_incognito_inactive":[22,24,66],
+	  "bookmark_text":[75,123,79],
+      "toolbar" : [75, 123, 78],
+	  "toolbar_button_icon": [22, 24, 66],
+      "button_background" : [255, 255, 255],
+	  "omnibox_background" : [22, 24, 66]
+    },
+    "tints" : {
+      "buttons" : [0.33, 0.5, 0.47]
+    },
+    "properties" : {
+      "ntp_background_alignment" : "bottom"
+    }
+  }
+}
