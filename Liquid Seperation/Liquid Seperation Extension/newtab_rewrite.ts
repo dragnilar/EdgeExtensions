@@ -14,6 +14,7 @@ let searchBoxDropDownElement: Element = null,
     searchOptionElement: HTMLInputElement = null,
     topSiteOptionElement: HTMLInputElement = null,
     closeSettingsElement: HTMLInputElement = null,
+    goToOptionsButtonElement: HTMLButtonElement = null,
     //Default settings
     searchRegion : string = "https://www.bing.com/search?`={0}",
     bgDisplayMode : number = 2,
@@ -27,10 +28,26 @@ window.onload = function ()
     {
         SetOptionsOrReplaceWithDefaults(optionsArray);
     });
-    HookUpEventListeners();
     GetPageElements();
+    HookUpEventListeners();
     SetupQuickLinks();
     document.body.style.display = "block";
+}
+function GetPageElements()
+{
+    searchBoxDropDownElement = document.querySelector(".searchbox__dropdown");
+    searchBoxDropDownMenuElement = document.querySelector(".searchbox__dropdown-menu");
+    searchActionElement = document.querySelector("search-action");
+    form1Element = document.getElementById("form1");
+    bgElement = document.getElementById("bg");
+    photoTitleElement = document.getElementById("photoTitle");
+    photoLinkElement = document.getElementById("photoLink");
+    settingElement = document.getElementById("setting");
+    settingsDialogElement = document.querySelector(".settings__dialog");
+    searchOptionElement = document.querySelector("siteSearchOption");
+    topSiteOptionElement = document.querySelector("topSitesOption");
+    closeSettingsElement = document.querySelector(".settings__dialog-close");
+    goToOptionsButtonElement = document.querySelector(".GoToOptionsButton");
 }
 function HookUpEventListeners() {
     settingElement.addEventListener("click", function (clickEventArgs) {
@@ -46,7 +63,9 @@ function HookUpEventListeners() {
             settingsDialogElement.style.setProperty("transform", "\"translate3d(\" + (o.left - 260) + \"px, \" + o.height + \"px, 0px)\"");
             settingsDialogElement.classList.add("show");
         }});
-
+        goToOptionsButtonElement.addEventListener("click", function (clickEventArgs){
+            window.open((chrome.runtime.getURL('options.html')));
+        });
         searchActionElement.addEventListener("click", function (clickEventArgs) {
             clickEventArgs.preventDefault(), SetSearchActionElement();
         });
@@ -87,22 +106,6 @@ function HookUpEventListeners() {
         });
 
     }
-function GetPageElements()
-{
-    searchBoxDropDownElement = document.querySelector(".searchbox__dropdown");
-    searchBoxDropDownMenuElement = document.querySelector(".searchbox__dropdown-menu");
-    searchActionElement = document.querySelector("search-action");
-    form1Element = document.getElementById("form1");
-    bgElement = document.getElementById("bg");
-    photoTitleElement = document.getElementById("photoTitle");
-    photoLinkElement = document.getElementById("photoLink");
-    settingElement = document.getElementById("setting");
-    settingsDialogElement = document.querySelector(".settings__dialog");
-    searchOptionElement = document.querySelector("siteSearchOption");
-    topSiteOptionElement = document.querySelector("topSitesOption");
-    closeSettingsElement = document.querySelector(".settings__dialog-close");
-}
-
 function SetOptionsOrReplaceWithDefaults(optionsArray)
 {
     if (optionsArray.region != null)
