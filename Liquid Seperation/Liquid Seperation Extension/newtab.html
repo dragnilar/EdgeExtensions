@@ -17,9 +17,99 @@
             <div class="container">
                 <div class="row no-gutters">
                     <div class="col-12">
-                        <button class="rewardsButton" style=" float: left;">
-                            <img src="icons/fluent_square_menu.png" style="height: 24px; width: 24px;">
-                        </button>
+                        <div class="dropdown">
+                            <button class="waffleButton dropdown-toggle" id="waffleDropDownMenu"
+                                    type="button"
+                                    data-mdb-toggle="dropdown" aria-expanded="false" style="float: left;">
+                                <img src="icons/fluent_square_menu.png" style="height: 24px; width: 24px;">
+                            </button>
+                            <div class="dropdown-menu p-4 text-muted" style="max-width: 300px; background-color: #4A4A4A; opacity: 0.75"
+                                 aria-labelledby="waffleDropDownMenu">
+                                <div>
+                                    <a href="https://admin.microsoft.com/Adminportal/Home?source=applauncher#/homepage" class="MS365Link">
+                                        <label class="modal-title" style="padding-bottom: 20px">Microsoft 365</label>
+                                        <img src="icons/microsoft_logo_white_border.png" height="42" width="42">
+                                    </a>
+
+                                    <div>
+                                        <table>
+                                            <tr >
+                                                <td class="M365TableCellLeft">
+                                                    <a href="https://my.visualstudio.com/" class="office365Link">
+                                                        <label>Visual Studio</label>
+                                                        <img src="icons/visual_studio_green.png" width="26" height="26">
+                                                    </a>
+                                                </td>
+                                                <td class="M365TableCellRight">
+                                                    <a href="https://portal.azure.com/#home" class="office365Link">
+                                                        <label>Azure</label>
+                                                       <img src="icons/azure_green_border.png" width="26" height="26">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="M365TableCellLeft">
+                                                    <a href="https://www.outlook.com" class="office365Link">
+                                                        <label>Outlook</label>
+                                                        <img viewbox="0 0 22 22" width="22px" height="22px" src="https://assets.msn.com/staticsb/statics/latest/icons/office-icons/Outlook_24x.svg">
+                                                        <a href="href=https://outlook.com"></a>
+                                                        </img>
+                                                    </a>
+                                                </td>
+                                                <td class="M365TableCellRight">
+                                                    <a href="https://onedrive.live.com" title="OneDrive" aria-label="OneDrive" class="office365Link">
+                                                        <label>OneDrive</label>
+                                                        <img slot="start" viewbox="0 0 22 22" width="22px" height="22px"
+                                                             src="https://assets.msn.com/staticsb/statics/latest/icons/office-icons/OneDrive_24x.svg">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="M365TableCellLeft">
+                                                    <a href="https://www.office.com/launch/word?auth=1" class="office365Link">
+                                                        <label>Word</label>
+                                                        <img slot="start" viewbox="0 0 22 22" width="22px" height="22px"
+                                                             src="https://assets.msn.com/staticsb/statics/latest/icons/office-icons/Word_24x.svg">
+                                                    </a>
+                                                </td>
+                                                <td class="M365TableCellRight">
+                                                    <a href="https://www.office.com/launch/excel?auth=1" title="Excel" aria-label="Excel" class="office365Link">
+                                                        <label>Excel</label>
+                                                        <img slot="start" viewbox="0 0 22 22" width="22px" height="22px"
+                                                             src="https://assets.msn.com/staticsb/statics/latest/icons/office-icons/Excel_24x.svg">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="M365TableCellLeft">
+                                                    <a href="https://www.office.com/launch/powerpoint?auth=1" class="office365Link">
+                                                        <label>PowerPoint</label>
+                                                        <img slot="start" viewbox="0 0 22 22" width="22px" height="22px"
+                                                             src="https://assets.msn.com/staticsb/statics/latest/icons/office-icons/PowerPoint_24x.svg">
+                                                    </a>
+                                                </td>
+                                                <td class="M365TableCellRight">
+                                                    <a href="https://www.onenote.com/notebooks?auth=1" class="office365Link">
+                                                        <label>OneNote</label>
+                                                        <img slot="start" viewbox="0 0 22 22" width="22px" height="22px"
+                                                             src="https://assets.msn.com/staticsb/statics/latest/icons/office-icons/OneNote_24x.svg">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div style="padding-top: 15px">
+                                        <a href="https://www.office.com/apps?auth=1" class="office365Link">
+                                            <label>All Office Apps</label>
+                                            <svg width="14" height="13" class="arrow-icon" viewBox="0 0 14 13"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7.54848 0L14 6.5L7.54848 13L6.93144 12.3783L12.3271 6.94208H0V6.05792H12.3271L6.93144 0.621679L7.54848 0Z"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <button class="rewardsButton" id="rewardsButtonLink">
                             <a href="https://rewards.microsoft.com/?FORM=ANNRW1&redref=amc">
                                 <img src="icons/fluent_medal.png">
@@ -27,7 +117,7 @@
                             </data>
                         </button>
                         <span style="padding-left: 15px"></span>
-                        <button class="settings__btn" id="setting" type="button" data-mdb-toggle="modal"
+                        <button class="settingsButton" id="setting" type="button" data-mdb-toggle="modal"
                                 data-mdb-target="#settingsModal">
                             <img src="icons/fluent_gear.png">
                         </button>
@@ -42,19 +132,18 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="settings__options settings_foreColor">
-                                                <div class="settings__option">
-                                                    <span>Web Search</span>
-                                                    <label class="toggle-switch">
-                                                        <input type="checkbox" id="siteSearchOption" />
-                                                        <span class="toggle-switch__track"></span>
-                                                    </label>
+                                                <div class="form-check form-switch">
+                                                    <label class="form-check-label" for="siteSearchOption">Show Web
+                                                        Search Box</label>
+                                                    <input class="form-check-input" type="checkbox"
+                                                           id="siteSearchOption">
                                                 </div>
-                                                <div class="settings__option">
-                                                    <span>Top Sites</span>
-                                                    <label class="toggle-switch">
-                                                        <input type="checkbox" id="topSitesOption" />
-                                                        <span class="toggle-switch__track"></span>
-                                                    </label>
+                                                <br/>
+                                                <div class="form-check form-switch">
+                                                    <label class="form-check-label" for="topSitesOption">Show Quick
+                                                        Link</label>
+                                                    <input class="form-check-input" type="checkbox"
+                                                           id="topSitesOption">
                                                 </div>
                                                 <br/>
                                                 <br/>
