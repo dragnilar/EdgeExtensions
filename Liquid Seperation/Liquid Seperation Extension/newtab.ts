@@ -44,7 +44,6 @@ let searchActionElement: any = null,
     photoTitleElement: HTMLElement = null,
     photoLinkElement: Element = null,
     settingElement: Element = null,
-    settingsDialogElement: HTMLElement = null,
     searchOptionElement: HTMLInputElement = null,
     topSiteOptionElement: HTMLInputElement = null,
     goToOptionsButtonElement: HTMLButtonElement = null,
@@ -60,12 +59,11 @@ window.onload = function ()
 {
     chrome.storage.local.get(["region", "displayMode", "siteSearch", "showSearch", "showQuickLinks"], function (optionsArray)
     {
-        SetOptionsOrReplaceWithDefaults(optionsArray);
+        SetOptionsAndGetBackground(optionsArray);
     });
     GetPageElements();
     HookUpEventListeners();
     SetupQuickLinks();
-    GetBackground()
     document.body.style.display = "block";
 }
 function GetPageElements()
@@ -76,7 +74,6 @@ function GetPageElements()
     photoTitleElement = document.getElementById("photoTitle");
     photoLinkElement = document.getElementById("photoLink");
     settingElement = document.getElementById("setting");
-    settingsDialogElement = document.querySelector(".settings__dialog");
     searchOptionElement = document.getElementById("siteSearchOption") as HTMLInputElement;
     topSiteOptionElement = document.getElementById("topSitesOption") as HTMLInputElement;
     goToOptionsButtonElement = document.getElementById("GoToOptionsButton") as HTMLButtonElement;
@@ -84,27 +81,14 @@ function GetPageElements()
     topSiteElement = document.getElementById("TopSitesDiv");
 }
 function HookUpEventListeners() {
-    settingElement.addEventListener("click", function (clickEventArgs) {
-        if (settingsDialogElement.classList.contains("show"))
-            settingsDialogElement.classList.remove("show");
-        else {
-            // @ts-ignore
-            clickEventArgs.currentTarget.getBoundingClientRect();
-            settingsDialogElement.style.setProperty("position", "absolute");
-            settingsDialogElement.style.setProperty("will-change", "transform");
-            settingsDialogElement.style.setProperty("top", "0px");
-            settingsDialogElement.style.setProperty("left", "0px");
-            settingsDialogElement.style.setProperty("transform", "\"translate3d(\" + (o.left - 260) + \"px, \" + o.height + \"px, 0px)\"");
-            settingsDialogElement.classList.add("show");
-        }});
         goToOptionsButtonElement.addEventListener("click", function (clickEventArgs){
             window.open((chrome.runtime.getURL('options.html')));
         });
         searchActionElement.addEventListener("click", function (clickEventArgs) {
-            clickEventArgs.preventDefault(), SetSearchActionElement();
+            clickEventArgs.preventDefault(), RunSearchQuery();
         });
         form1Element.addEventListener("keydown", function (keyDownEventArgs: KeyboardEvent) {
-            "Enter" === keyDownEventArgs.code && (keyDownEventArgs.preventDefault(), SetSearchActionElement());
+            "Enter" === keyDownEventArgs.code && (keyDownEventArgs.preventDefault(), RunSearchQuery());
         });
         searchOptionElement.addEventListener("click", function () {
             searchBoxContainerElement.style.display = searchOptionElement.checked ? "block" : "none";
@@ -118,9 +102,8 @@ function HookUpEventListeners() {
         });
 
     }
-function SetOptionsOrReplaceWithDefaults(optionsArray)
+function SetOptionsAndGetBackground(optionsArray)
 {
-
     if (optionsArray.region != null)
         searchRegion = optionsArray.region;
     else
@@ -151,7 +134,7 @@ function SetOptionsOrReplaceWithDefaults(optionsArray)
         chrome.storage.local.set({showQuickLinks: showBookmarkLinks});
         topSiteOptionElement.checked = true;
     }
-
+    GetBackground()
 }
 
 function SetupQuickLinks()
@@ -184,14 +167,14 @@ function CreateQuickLinkTiles(quickLinkList)
     for (let currentIndex = 0; currentIndex < quickLinkList.length; currentIndex++)
     {
         var currentQuickLInk = quickLinkList[currentIndex],
-            r =
+            r = '<td>' +
                 ' <div class="topsites__site">\n            <a class="topsites__link" href="' +
                 currentQuickLInk.url +
                 '">\n                <div class="topsites__content">\n                    <img class="topsites__img" src="' +
                 currentQuickLInk.image +
                 '" />\n                    <span class="topsites__title">' +
                 currentQuickLInk.title +
-                "</span>\n                </div>\n            </a>";
+                "</span>\n                </div>\n            </a> </td>";
 
         newTabQuickLinkCount++;
         let gridElementName = GetGridElementName(newTabQuickLinkCount);
@@ -200,14 +183,11 @@ function CreateQuickLinkTiles(quickLinkList)
     }
 }
 
-function ResetOptions (){
-    chrome.storage.local.remove(["region", "displayMode", "siteSearch", "showSearch", "showQuickLinks"]);
-}
 function GetBookMarkFavicon(bookMarkUrl){
     return "chrome://favicon/size/64/" + bookMarkUrl;
 }
 
-function SetSearchActionElement() {
+function RunSearchQuery() {
         // @ts-ignore
         let e = form1Element.value.trim();
         if ("" != e) {
@@ -231,7 +211,7 @@ function GetGridElementName(quickLinksCount){
 
 function GetBackground()
 {
-    let urlEnd = searchRegion != "" ? '?country=' + '${searchRegion}' : "";
+    let urlEnd = searchRegion != "" ? '?country=' + searchRegion : "";
     let url = "https://peapix.com/bing/feed" + urlEnd;
     let request = new XMLHttpRequest();
     request.open("GET", url, true);
@@ -240,10 +220,18 @@ function GetBackground()
         if (request.readyState == XMLHttpRequest.DONE && request.status == 200)
         {
             let imageCollection = <BingImage[]>JSON.parse(request.responseText);
-            let firstImage = imageCollection[0];
-            bgElement.setAttribute("style", "background-image:url('" + encodeURI(firstImage.fullUrl) + "');"),
-                (photoTitleElement.innerText = firstImage.title),
-                photoLinkElement.setAttribute("href", firstImage.fullUrl),
+            let selectedImage : BingImage;
+            if (bgDisplayMode === 2)
+            {
+                selectedImage = imageCollection[Math.floor(Math.random() * imageCollection.length)];
+            }
+            else
+            {
+                selectedImage = imageCollection[0];
+            }
+            bgElement.setAttribute("style", "background-image:url('" + encodeURI(selectedImage.fullUrl) + "');"),
+                (photoTitleElement.innerText = selectedImage.title),
+                photoLinkElement.setAttribute("href", selectedImage.fullUrl),
                 (document.body.style.display = "block");
         }
     }

@@ -1,0 +1,404 @@
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+}
+.no-gutters > .col,
+.no-gutters > [class*="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 0.875rem;
+    font-family: "Segoe UI", Helvetica, sans-serif;
+}
+a {
+    text-decoration: none;
+}
+.text-gray {
+    color: #586069 !important;
+}
+.newtab-body {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+.newtab-bg {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.newtab-bg:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-height: 100%;
+    width: 100%;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.5) 100%), radial-gradient(rgba(0, 0, 0, 0) 33%, rgba(0, 0, 0, 0.3) 166%);
+}
+.searchbox-container {
+    position: absolute;
+    top: 20%;
+    left: 0;
+    width: 100%;
+    display: flex;
+}
+@media (max-width: 991.98px) {
+    .searchbox-container {
+        top: 15%;
+    }
+}
+.searchbox {
+    position: relative;
+    margin: 0 auto;
+    max-width: 650px;
+    width: 100%;
+    display: flex;
+    flex: 1 1 100%;
+    background: #4A4A4A;
+    color: #AFB1B3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: 0.2s;
+    border-radius: 25px;
+    opacity: 0.9;
+}
+.searchbox:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+.searchbox:focus-within {
+    opacity: 1;
+}
+.searchbox__input {
+    width: 100%;
+    border: none;
+    font-size: 1rem;
+    background: #4A4A4A;
+    color: #AFB1B3;
+    border-radius: 25px;
+    margin: 0 0 0 0px;
+    padding: 12px 10px 12px 16px;
+}
+.searchbox__input:focus {
+    border: none;
+    outline: 0;
+}
+.searchBoxLeft {
+}
+.searchbox__button {
+    margin: 0 0px 0 0;
+    border: none;
+    box-shadow: none;
+    min-width: 50px;
+    background: #4A4A4A;
+    color: #AFB1B3;
+    line-height: 1;
+    position: relative;
+    display: inline-flex;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 11px 24px;
+    border-radius: 25px;
+}
+.searchbox__button:focus {
+    display: flex;
+    align-items: center;
+    background: #4A4A4A;
+    color: #AFB1B3;
+    opacity: 0.65;
+    transition: 0.2s;
+    position: relative;
+    font-size: 1rem;
+    padding: 0 10px 0 15px;
+    cursor: pointer;
+    border-radius: 25px;
+}
+.searchbox__svg-icon {
+    opacity: 0.9;
+}
+.searchbox__svg-icon {
+    color: inherit;
+    position: relative;
+    display: inline-flex;
+    background-repeat: no-repeat;
+    background-size: contain;
+    justify-content: center;
+}
+.searchbox__svg-icon svg {
+    fill: #AFB1B3;
+}
+.topsites__site:hover .topsites__open-link {
+    opacity: 1;
+}
+.settings {
+    text-align: right;
+    top: 36px;
+    left: 0;
+    display: flex;
+    width: 100%;
+    position: absolute;
+}
+@media (max-width: 991.98px) {
+    .settings {
+        top: 20px;
+    }
+}
+.settings__option--hover:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+}
+.settings__btn,
+.settings__option {
+    border-radius: 2px;
+    cursor: pointer;
+}
+.settings_foreColor{
+    color:#ffffff;
+}
+.settings__options {
+    padding: 0 6px;
+}
+.settings__option {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    justify-content: space-between;
+    font-size: 12px;
+}
+.settingsButton {
+    color: #fff;
+    border: none;
+    outline: 0;
+    background-color: transparent;
+    padding: 5px 4px;
+    transition: all 0.1s ease-in-out;
+}
+.settingsButton:hover {
+    background-color: rgba(158, 158, 158, 0.45);
+    border-radius: 4px;
+}
+.settingsButton i {
+    font-size: 1.3rem;
+}
+.topsites {
+    position: absolute;
+    width: 100%;
+    bottom: 120px;
+    left: 0;
+    display: flex;
+}
+.topsites__content,
+.topsites__site {
+    transition: all 0.2s ease-in-out;
+    border-radius: 4px;
+    position: relative;
+}
+.topsites__site {
+    width: 108px;
+    height: 84px;
+    flex-shrink: 0;
+}
+@media (max-width: 991.98px) {
+    .topsites__site:nth-child(n + 5) {
+        display: none;
+    }
+}
+.topsites__content {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 12px;
+    opacity: 0.85;
+}
+.topsites__content:hover {
+    background-color: rgba(158, 158, 158, 0.45);
+}
+.topsites__content:active{
+    border-color: #c8cbcf;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 4px;
+}
+.topsites__img {
+    max-width: 100%;
+    height: 55px;
+    width: 55px;
+    background-color: #4A4A4A;
+    align-items: center;
+    box-sizing: border-box;
+    justify-content: center;
+    display: flex;
+    border-radius: 6px;
+    border-style: solid;
+    border-width: 10px;
+    border-color: #4A4A4A;
+}
+.topsites__title {
+    font-size: 13px;
+    line-height: 16px;
+    overflow: hidden;
+    box-sizing: content-box;
+    max-height: 16px;
+    white-space: nowrap;
+    /*max-width: 100%;*/
+    /*margin: 10px 0 0;*/
+    bottom: -25px;
+    position: absolute;
+    /*padding: 0;*/
+    /*text-decoration: none;*/
+    font-family: "Segoe UI Semibold", Helvetica, SansSerif;
+    text-overflow: ellipsis;
+    font-weight: 400;
+    color: #d8d8e0;
+}
+.topsites__open-link {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    outline: 0;
+    border: none;
+    opacity: 0;
+    background-color: transparent;
+    transition: 0.2s;
+    color: #212121;
+}
+.topsites__link {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+}
+.topsites-grid {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: center;
+    max-width: 100%;
+    /*overflow: hidden;*/
+}
+.topsites-grid > div:not(:first-child) {
+    margin-left: 16px;
+}
+.museum-card {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.museum-card__credit {
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+    padding: 10px 16px;
+    transition: 0.2s;
+    opacity: 0.5;
+    background: rgba(0, 0, 0, 0.6);
+}
+.museum-card__credit:hover {
+    opacity: 0.7;
+    background: rgba(0, 0, 0, 0.7);
+}
+.museum-card__credit svg {
+    fill: #fff;
+    width: 13px;
+    height: 13px;
+    margin-right: 5px;
+}
+.museum-card__title {
+    color: #fff;
+    font-size: 12px;
+    max-width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    display: inline-block;
+}
+.museum-card .info-button {
+    margin-left: 6px;
+    color: #fff;
+}
+.back_dark{
+    background-color: #0c0c0b;
+    opacity: 0.75;
+}
+.rewardsButton {
+    color: #fff;
+    border: none;
+    outline: 0;
+    background-color: transparent;
+    padding: 5px 4px;
+    transition: all 0.1s ease-in-out;
+}
+.rewardsButton:hover {
+    background-color: rgba(158, 158, 158, 0.45);
+    border-radius: 4px;
+}
+.waffleButton {
+    color: #fff;
+    border: none;
+    outline: 0;
+    background-color: transparent;
+    padding: 5px 4px;
+    transition: all 0.1s ease-in-out;
+}
+.waffleButton:hover {
+    background-color: rgba(158, 158, 158, 0.45);
+    border-radius: 4px;
+}
+.office365Link{
+    color: ghostwhite;
+    font-size: 15px;
+    cursor: pointer;
+}
+.office365Link:hover{
+    background-color: rgba(158, 158, 158, 0.45);
+    border-radius: 4px;
+    cursor: pointer;
+}
+.MS365Link{
+    color: ghostwhite;
+    font-size: 32px;
+    cursor: pointer;
+}
+.MS365Link:hover{
+    background-color: rgba(158, 158, 158, 0.45);
+    border-radius: 4px;
+    cursor: pointer;
+}
+.M365TableCellLeft{
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+.M365TableCellRight{
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
