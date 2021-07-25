@@ -2,37 +2,59 @@
 import KeyEventEvent = chrome.input.ime.KeyEventEvent;
 import request = chrome.permissions.request;
 
+class QuickLink
+{
+    title: string;
+    url: string;
+    image: string;
+
+    constructor(title, url, image)
+    {
+        this.title = title;
+        this.url = url;
+        this.image = image;
+    }
+}
+
+class BingImage
+{
+    pageURl : string;
+    thumbUrl : string;
+    title : string;
+    copyright : string;
+    date: string;
+    fullUrl: string;
+
+    constructor(pageUrl, thumbUrl, title, copyright, date, fullUrl)
+    {
+        this.pageURl = pageUrl;
+        this.thumbUrl = thumbUrl;
+        this.title = title;
+        this.copyright = copyright;
+        this.date = date;
+        this.fullUrl = fullUrl;
+    }
+
+}
+
 let newTabQuickLinkCount = 0;
-let searchBoxDropDownElement: Element = null,
-    searchBoxDropDownMenuElement : HTMLElement = null,
-    searchActionElement : any = null,
-    form1Element : Element = null,
+let searchActionElement: any = null,
+    form1Element: Element = null,
     bgElement: Element = null,
-    photoTitleElement: Element = null,
+    photoTitleElement: HTMLElement = null,
     photoLinkElement: Element = null,
     settingElement: Element = null,
     settingsDialogElement: HTMLElement = null,
     searchOptionElement: HTMLInputElement = null,
     topSiteOptionElement: HTMLInputElement = null,
     goToOptionsButtonElement: HTMLButtonElement = null,
+    searchBoxContainerElement : HTMLElement,
+    topSiteElement : HTMLElement,
     //Default settings
     searchRegion : string = "",
     bgDisplayMode : number = 2,
-    webSearchSite : string = null,
     showWebSearch : boolean = true,
     showBookmarkLinks : boolean = true;
-
-function GetBackground() {
-    let urlEnd = searchRegion != "" ? '?country=' + '${searchRegion}' : "";
-    let url = "https://peapix.com/bing/feed" + urlEnd;
-    let request = new XMLHttpRequest();
-    request.addEventListener("load", ev => {
-        var response = JSON.parse(request.responseText);
-        console.log(response.toString());
-    });
-    request.open("GET", url);
-    request.send();
-}
 
 window.onload = function ()
 {
@@ -48,8 +70,6 @@ window.onload = function ()
 }
 function GetPageElements()
 {
-    searchBoxDropDownElement = document.querySelector(".searchbox__dropdown");
-    searchBoxDropDownMenuElement = document.querySelector(".searchbox__dropdown-menu");
     searchActionElement = document.getElementById("search-action");
     form1Element = document.getElementById("form1");
     bgElement = document.getElementById("bg");
@@ -60,6 +80,8 @@ function GetPageElements()
     searchOptionElement = document.getElementById("siteSearchOption") as HTMLInputElement;
     topSiteOptionElement = document.getElementById("topSitesOption") as HTMLInputElement;
     goToOptionsButtonElement = document.getElementById("GoToOptionsButton") as HTMLButtonElement;
+    searchBoxContainerElement = document.getElementById("SearchBoxDiv");
+    topSiteElement = document.getElementById("TopSitesDiv");
 }
 function HookUpEventListeners() {
     settingElement.addEventListener("click", function (clickEventArgs) {
@@ -82,41 +104,23 @@ function HookUpEventListeners() {
             clickEventArgs.preventDefault(), SetSearchActionElement();
         });
         form1Element.addEventListener("keydown", function (keyDownEventArgs: KeyboardEvent) {
-            "13" === keyDownEventArgs.code && (keyDownEventArgs.preventDefault(), SetSearchActionElement());
-        });
-        searchBoxDropDownElement.addEventListener("click", function (args) {
-            // @ts-ignore
-            if (args.currentTarget.classList.contains("show")) return args.currentTarget.classList.remove("show"), void searchBoxDropDownMenuElement.classList.remove("show");
-            // @ts-ignore
-            args.currentTarget.classList.add("show");
-            // @ts-ignore
-            let o = args.currentTarget.getBoundingClientRect();
-            searchBoxDropDownMenuElement.style.setProperty("position", "absolute");
-            searchBoxDropDownMenuElement.style.setProperty("will-change", "transform");
-            searchBoxDropDownMenuElement.style.setProperty("top", "0px");
-            searchBoxDropDownMenuElement.style.setProperty("left", "0px");
-            searchBoxDropDownMenuElement.style.setProperty("transform", "translate3d(0px, " + o.height + "px, 0px)");
-            searchBoxDropDownMenuElement.classList.add("show");
-        });
-        searchBoxDropDownMenuElement.addEventListener("mouseleave", function (args) {
-            removeShow();
+            "Enter" === keyDownEventArgs.code && (keyDownEventArgs.preventDefault(), SetSearchActionElement());
         });
         searchOptionElement.addEventListener("click", function () {
-            var searchBoxContainerElement = document.getElementById("SearchBoxDiv");
             searchBoxContainerElement.style.display = searchOptionElement.checked ? "block" : "none";
             showWebSearch = searchOptionElement.checked;
             chrome.storage.local.set({showSearch: showWebSearch});
         });
         topSiteOptionElement.addEventListener("click", function () {
-            var topSiteElement = document.getElementById("TopSitesDiv");
             topSiteElement.style.display = topSiteOptionElement.checked ? "block" : "none";
             showBookmarkLinks = topSiteOptionElement.checked;
-            chrome.storage.local.set({showQuickLink: showBookmarkLinks});
+            chrome.storage.local.set({showQuickLinks: showBookmarkLinks});
         });
 
     }
 function SetOptionsOrReplaceWithDefaults(optionsArray)
 {
+
     if (optionsArray.region != null)
         searchRegion = optionsArray.region;
     else
@@ -125,31 +129,29 @@ function SetOptionsOrReplaceWithDefaults(optionsArray)
         bgDisplayMode = optionsArray.displayMode;
     else
         chrome.storage.local.set({displayMode: bgDisplayMode});
-    if (optionsArray.siteSearch != null)
-        webSearchSite = optionsArray.siteSearch;
-    else
-        chrome.storage.local.set({siteSearch: webSearchSite});
     if (optionsArray.showSearch != null)
+    {
         showWebSearch = optionsArray.showSearch;
-    else
-        chrome.storage.local.set({showSearch: showWebSearch});
-    if (optionsArray.showQuickLinks != null)
-        showBookmarkLinks = optionsArray.showQuickLinks;
-    else
-        chrome.storage.local.set({showQuickLink: showBookmarkLinks});
-}
-
-class QuickLink
-    {
-        title : string;
-        url : string;
-        image : string;
-    constructor(title, url, image)
-    {
-        this.title = title;
-        this.url = url;
-        this.image = image;
+        searchOptionElement.checked = showWebSearch;
+        searchBoxContainerElement.style.display = searchOptionElement.checked ? "block" : "none";
     }
+    else
+    {
+        chrome.storage.local.set({showSearch: showWebSearch});
+        searchOptionElement.checked = true;
+    }
+    if (optionsArray.showQuickLinks != null)
+    {
+        showBookmarkLinks = optionsArray.showQuickLinks;
+        topSiteOptionElement.checked = showBookmarkLinks;
+        topSiteElement.style.display = topSiteOptionElement.checked ? "block" : "none";
+    }
+    else
+    {
+        chrome.storage.local.set({showQuickLinks: showBookmarkLinks});
+        topSiteOptionElement.checked = true;
+    }
+
 }
 
 function SetupQuickLinks()
@@ -209,17 +211,11 @@ function SetSearchActionElement() {
         // @ts-ignore
         let e = form1Element.value.trim();
         if ("" != e) {
-            var t = searchBoxDropDownElement.getAttribute("data-value"),
-                o = searchBoxDropDownMenuElement.querySelector("[data-value='" + t + "']");
-            if (null != o) {
-                let n = searchActionElement.formatString(o.getAttribute("data-url"), encodeURIComponent(e));
-                chrome.tabs.update({ url: n });
-            }
+            var t = "https://www.bing.com/search?q={0}";
+            let n = t.replace("{0}", e);
+            chrome.tabs.update({ url: n });
         }
     }
-function removeShow() {
-    searchBoxDropDownElement.classList.remove("show"), searchBoxDropDownMenuElement.classList.remove("show");
-}
 
 // @ts-ignore
 function GetGridElementName(quickLinksCount){
@@ -231,4 +227,26 @@ function GetGridElementName(quickLinksCount){
         return "topsites-grid-3"
     else if (quickLinksCount >= 31)
         return "topsites-grid-4"
+}
+
+function GetBackground()
+{
+    let urlEnd = searchRegion != "" ? '?country=' + '${searchRegion}' : "";
+    let url = "https://peapix.com/bing/feed" + urlEnd;
+    let request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.onreadystatechange = function ()
+    {
+        if (request.readyState == XMLHttpRequest.DONE && request.status == 200)
+        {
+            let imageCollection = <BingImage[]>JSON.parse(request.responseText);
+            let firstImage = imageCollection[0];
+            bgElement.setAttribute("style", "background-image:url('" + encodeURI(firstImage.fullUrl) + "');"),
+                (photoTitleElement.innerText = firstImage.title),
+                photoLinkElement.setAttribute("href", firstImage.fullUrl),
+                (document.body.style.display = "block");
+        }
+    }
+    request.send();
+
 }
