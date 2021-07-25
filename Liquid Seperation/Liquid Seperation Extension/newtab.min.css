@@ -3482,3 +3482,15 @@ a {
     background-color: #0c0c0b;
     opacity: 0.75;
 }
+.rewardsButton {
+    color: #fff;
+    border: none;
+    outline: 0;
+    background-color: transparent;
+    padding: 5px 4px;
+    transition: all 0.1s ease-in-out;
+}
+.rewardsButton:hover {
+    background-color: rgba(158, 158, 158, 0.45);
+    border-radius: 4px;
+}
