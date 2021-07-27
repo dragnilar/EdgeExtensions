@@ -207,9 +207,9 @@ function GetGridElementName(quickLinksCount){
         return "QuickLinks-grid-1";
     else if (quickLinksCount >= 12 && newTabQuickLinkCount < 25)
         return "QuickLinks-grid-2"
-    else if (quickLinksCount >= 25 && newTabQuickLinkCount < 36)
+    else if (quickLinksCount >= 25 && newTabQuickLinkCount < 37)
         return "QuickLinks-grid-3"
-    else if (quickLinksCount >= 36)
+    else if (quickLinksCount >= 37)
         return "QuickLinks-grid-4"
 }
 
