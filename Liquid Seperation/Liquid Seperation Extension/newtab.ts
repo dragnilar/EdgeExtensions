@@ -40,15 +40,14 @@ class BingImage
 let newTabQuickLinkCount = 0;
 let searchActionElement: any = null,
     form1Element: Element = null,
-    bgElement: Element = null,
     photoTitleElement: HTMLElement = null,
     photoLinkElement: Element = null,
     settingElement: Element = null,
     searchOptionElement: HTMLInputElement = null,
-    topSiteOptionElement: HTMLInputElement = null,
+    quickLinksOptionElement: HTMLInputElement = null,
     goToOptionsButtonElement: HTMLButtonElement = null,
     searchBoxContainerElement : HTMLElement,
-    topSiteElement : HTMLElement,
+    quickLinksElement : HTMLElement,
     //Default settings
     searchRegion : string = "",
     bgDisplayMode : number = 2,
@@ -70,22 +69,22 @@ function GetPageElements()
 {
     searchActionElement = document.getElementById("search-action");
     form1Element = document.getElementById("form1");
-    bgElement = document.getElementById("bg");
     photoTitleElement = document.getElementById("photoTitle");
     photoLinkElement = document.getElementById("photoLink");
     settingElement = document.getElementById("setting");
     searchOptionElement = document.getElementById("siteSearchOption") as HTMLInputElement;
-    topSiteOptionElement = document.getElementById("topSitesOption") as HTMLInputElement;
+    quickLinksOptionElement = document.getElementById("QuickLinksOption") as HTMLInputElement;
     goToOptionsButtonElement = document.getElementById("GoToOptionsButton") as HTMLButtonElement;
     searchBoxContainerElement = document.getElementById("SearchBoxDiv");
-    topSiteElement = document.getElementById("TopSitesDiv");
+    quickLinksElement = document.getElementById("QuickLinksDiv");
 }
 function HookUpEventListeners() {
-        goToOptionsButtonElement.addEventListener("click", function (clickEventArgs){
+        goToOptionsButtonElement.addEventListener("click", function (){
             window.open((chrome.runtime.getURL('options.html')));
         });
         searchActionElement.addEventListener("click", function (clickEventArgs) {
-            clickEventArgs.preventDefault(), RunSearchQuery();
+            clickEventArgs.preventDefault(),
+            RunSearchQuery();
         });
         form1Element.addEventListener("keydown", function (keyDownEventArgs: KeyboardEvent) {
             "Enter" === keyDownEventArgs.code && (keyDownEventArgs.preventDefault(), RunSearchQuery());
@@ -95,13 +94,14 @@ function HookUpEventListeners() {
             showWebSearch = searchOptionElement.checked;
             chrome.storage.local.set({showSearch: showWebSearch});
         });
-        topSiteOptionElement.addEventListener("click", function () {
-            topSiteElement.style.display = topSiteOptionElement.checked ? "block" : "none";
-            showBookmarkLinks = topSiteOptionElement.checked;
+        quickLinksOptionElement.addEventListener("click", function () {
+            quickLinksElement.style.display = quickLinksOptionElement.checked ? "block" : "none";
+            showBookmarkLinks = quickLinksOptionElement.checked;
             chrome.storage.local.set({showQuickLinks: showBookmarkLinks});
         });
 
     }
+
 function SetOptionsAndGetBackground(optionsArray)
 {
     if (optionsArray.region != null)
@@ -112,6 +112,7 @@ function SetOptionsAndGetBackground(optionsArray)
         bgDisplayMode = optionsArray.displayMode;
     else
         chrome.storage.local.set({displayMode: bgDisplayMode});
+    // noinspection DuplicatedCode
     if (optionsArray.showSearch != null)
     {
         showWebSearch = optionsArray.showSearch;
@@ -123,16 +124,17 @@ function SetOptionsAndGetBackground(optionsArray)
         chrome.storage.local.set({showSearch: showWebSearch});
         searchOptionElement.checked = true;
     }
+    // noinspection DuplicatedCode
     if (optionsArray.showQuickLinks != null)
     {
         showBookmarkLinks = optionsArray.showQuickLinks;
-        topSiteOptionElement.checked = showBookmarkLinks;
-        topSiteElement.style.display = topSiteOptionElement.checked ? "block" : "none";
+        quickLinksOptionElement.checked = showBookmarkLinks;
+        quickLinksElement.style.display = quickLinksOptionElement.checked ? "block" : "none";
     }
     else
     {
         chrome.storage.local.set({showQuickLinks: showBookmarkLinks});
-        topSiteOptionElement.checked = true;
+        quickLinksOptionElement.checked = true;
     }
     GetBackground()
 }
@@ -168,11 +170,13 @@ function CreateQuickLinkTiles(quickLinkList)
     {
         var currentQuickLInk = quickLinkList[currentIndex],
             r = '<td>' +
-                ' <div class="topsites__site">\n            <a class="topsites__link" href="' +
+                ' <div class="QuickLinkSite">\n            <a class="QuickLinkUrlLink" href="' +
                 currentQuickLInk.url +
-                '">\n                <div class="topsites__content">\n                    <img class="topsites__img" src="' +
+                '">\n                <div class="QuickLinksContent">\n                    <img class="QuickLinkBookMarkImage" src="' +
                 currentQuickLInk.image +
-                '" />\n                    <span class="topsites__title">' +
+                '" alt="'+
+                currentQuickLInk.title +
+                '" /> <span class="QuickLinkTitle">' +
                 currentQuickLInk.title +
                 "</span>\n                </div>\n            </a> </td>";
 
@@ -199,14 +203,14 @@ function RunSearchQuery() {
 
 // @ts-ignore
 function GetGridElementName(quickLinksCount){
-    if (quickLinksCount <= 10)
-        return "topsites-grid-1";
-    else if (quickLinksCount >= 10 && newTabQuickLinkCount < 21)
-        return "topsites-grid-2"
-    else if (quickLinksCount >= 21 && newTabQuickLinkCount < 31)
-        return "topsites-grid-3"
-    else if (quickLinksCount >= 31)
-        return "topsites-grid-4"
+    if (quickLinksCount <= 12)
+        return "QuickLinks-grid-1";
+    else if (quickLinksCount >= 12 && newTabQuickLinkCount < 25)
+        return "QuickLinks-grid-2"
+    else if (quickLinksCount >= 25 && newTabQuickLinkCount < 36)
+        return "QuickLinks-grid-3"
+    else if (quickLinksCount >= 36)
+        return "QuickLinks-grid-4"
 }
 
 function GetBackground()
@@ -217,22 +221,29 @@ function GetBackground()
     request.open("GET", url, true);
     request.onreadystatechange = function ()
     {
-        if (request.readyState == XMLHttpRequest.DONE && request.status == 200)
+        try
         {
-            let imageCollection = <BingImage[]>JSON.parse(request.responseText);
-            let selectedImage : BingImage;
-            if (bgDisplayMode === 2)
+            if (request.readyState == XMLHttpRequest.DONE && request.status == 200)
             {
-                selectedImage = imageCollection[Math.floor(Math.random() * imageCollection.length)];
+                let imageCollection = <BingImage[]>JSON.parse(request.responseText);
+                let selectedImage: BingImage;
+                if (bgDisplayMode === 2)
+                {
+                    selectedImage = imageCollection[Math.floor(Math.random() * imageCollection.length)];
+                } else
+                {
+                    selectedImage = imageCollection[0];
+                }
+                document.body.setAttribute("style", "background-image:url('" + encodeURI(selectedImage.fullUrl) + "');"),
+                    (photoTitleElement.innerText = selectedImage.title),
+                    photoLinkElement.setAttribute("href", selectedImage.fullUrl),
+                    (document.body.style.display = "block");
+
             }
-            else
-            {
-                selectedImage = imageCollection[0];
-            }
-            bgElement.setAttribute("style", "background-image:url('" + encodeURI(selectedImage.fullUrl) + "');"),
-                (photoTitleElement.innerText = selectedImage.title),
-                photoLinkElement.setAttribute("href", selectedImage.fullUrl),
-                (document.body.style.display = "block");
+        }
+        catch (e)
+        {
+            console.log("Error getting background image:" + e.title + " " + e.stackTrace);
         }
     }
     request.send();

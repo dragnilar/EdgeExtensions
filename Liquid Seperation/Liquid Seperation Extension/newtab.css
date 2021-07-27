@@ -14,6 +14,12 @@ body {
     color: rgba(0, 0, 0, 0.87);
     font-size: 0.875rem;
     font-family: "Segoe UI", Helvetica, sans-serif;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    background-attachment: fixed;
+    background-color: dimgray;
 }
 a {
     text-decoration: none;
@@ -29,28 +35,7 @@ a {
     width: 100%;
     height: 100%;
 }
-.newtab-bg {
-    position: fixed;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    background-attachment: fixed;
-}
-.newtab-bg:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    max-height: 100%;
-    width: 100%;
-    right: 0;
-    bottom: 0;
-    background-image: radial-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.5) 100%), radial-gradient(rgba(0, 0, 0, 0) 33%, rgba(0, 0, 0, 0.3) 166%);
-}
+
 .searchbox-container {
     position: absolute;
     top: 20%;
@@ -144,16 +129,14 @@ a {
 .searchbox__svg-icon svg {
     fill: #AFB1B3;
 }
-.topsites__site:hover .topsites__open-link {
+.QuickLinkSite:hover .QuickLink_OpenLink {
     opacity: 1;
 }
 .settings {
     text-align: right;
-    top: 36px;
-    left: 0;
+    margin: 50px 50px 0 50px;
     display: flex;
     width: 100%;
-    position: absolute;
 }
 @media (max-width: 991.98px) {
     .settings {
@@ -196,30 +179,30 @@ a {
 .settingsButton i {
     font-size: 1.3rem;
 }
-.topsites {
+.QuickLinks {
     position: absolute;
     width: 100%;
     bottom: 120px;
     left: 0;
     display: flex;
 }
-.topsites__content,
-.topsites__site {
+.QuickLinksContent,
+.QuickLinkSite {
     transition: all 0.2s ease-in-out;
     border-radius: 4px;
     position: relative;
 }
-.topsites__site {
+.QuickLinkSite {
     width: 108px;
     height: 84px;
     flex-shrink: 0;
 }
 @media (max-width: 991.98px) {
-    .topsites__site:nth-child(n + 5) {
+    .QuickLinkSite:nth-child(n + 5) {
         display: none;
     }
 }
-.topsites__content {
+.QuickLinksContent {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -230,16 +213,16 @@ a {
     padding: 12px;
     opacity: 0.85;
 }
-.topsites__content:hover {
+.QuickLinksContent:hover {
     background-color: rgba(158, 158, 158, 0.45);
 }
-.topsites__content:active{
+.QuickLinksContent:active{
     border-color: #c8cbcf;
     border-width: 2px;
     border-style: solid;
     border-radius: 4px;
 }
-.topsites__img {
+.QuickLinkBookMarkImage {
     max-width: 100%;
     height: 55px;
     width: 55px;
@@ -253,7 +236,7 @@ a {
     border-width: 10px;
     border-color: #4A4A4A;
 }
-.topsites__title {
+.QuickLinkTitle {
     font-size: 13px;
     line-height: 16px;
     overflow: hidden;
@@ -269,9 +252,9 @@ a {
     font-family: "Segoe UI Semibold", Helvetica, SansSerif;
     text-overflow: ellipsis;
     font-weight: 400;
-    color: #d8d8e0;
+    color: #ffffff;
 }
-.topsites__open-link {
+.QuickLink_OpenLink {
     position: absolute;
     right: 5px;
     top: 5px;
@@ -282,7 +265,7 @@ a {
     transition: 0.2s;
     color: #212121;
 }
-.topsites__link {
+.QuickLinkUrlLink {
     position: absolute;
     left: 0;
     top: 0;
@@ -290,7 +273,7 @@ a {
     height: 100%;
     text-decoration: none;
 }
-.topsites-grid {
+.QuickLinksGrid {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -299,7 +282,7 @@ a {
     max-width: 100%;
     /*overflow: hidden;*/
 }
-.topsites-grid > div:not(:first-child) {
+.QuickLinksGrid > div:not(:first-child) {
     margin-left: 16px;
 }
 .museum-card {
