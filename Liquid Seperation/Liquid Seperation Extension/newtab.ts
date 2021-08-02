@@ -1,6 +1,8 @@
 // let quickLinkCount = 0;
 import KeyEventEvent = chrome.input.ime.KeyEventEvent;
 import request = chrome.permissions.request;
+import QueryInfo = chrome.search.QueryInfo;
+
 
 class QuickLink
 {
@@ -39,7 +41,7 @@ class BingImage
 
 let newTabQuickLinkCount = 0;
 let searchActionElement: any = null,
-    form1Element: Element = null,
+    form1Element: HTMLFormElement = null,
     photoTitleElement: HTMLElement = null,
     photoLinkElement: Element = null,
     settingElement: Element = null,
@@ -68,7 +70,7 @@ window.onload = function ()
 function GetPageElements()
 {
     searchActionElement = document.getElementById("search-action");
-    form1Element = document.getElementById("form1");
+    form1Element = document.getElementById("form1") as HTMLFormElement;
     photoTitleElement = document.getElementById("photoTitle");
     photoLinkElement = document.getElementById("photoLink");
     settingElement = document.getElementById("setting");
@@ -192,13 +194,11 @@ function GetBookMarkFavicon(bookMarkUrl){
 }
 
 function RunSearchQuery() {
-        // @ts-ignore
-        let e = form1Element.value.trim();
-        if ("" != e) {
-            var t = "https://www.bing.com/search?q={0}";
-            let n = t.replace("{0}", e);
-            chrome.tabs.update({ url: n });
-        }
+        let queryString : string = form1Element.value.trim();
+        chrome.search.query({text: queryString, disposition: "CURRENT_TAB"}, () =>
+        {
+            console.log(queryString)
+        });
     }
 
 // @ts-ignore

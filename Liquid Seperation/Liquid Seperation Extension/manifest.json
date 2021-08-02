@@ -16,7 +16,8 @@
       "alarms",
       "bookmarks",
       "chrome://favicon/*",
-      "https://peapix.com/*"
+      "https://peapix.com/*",
+	  "search"
    ],
    "version": "1.0.0"
 }
